@@ -9,10 +9,7 @@
     "repository": {
         "url": ""
     },
-    "main": "./lib/main",
-    "bin": {
-        "replaceme": "./bin/replaceme"
-    },
+    "main": "./lib/brest.js",
     "dependencies": {
         "async": "*",
         "colors": "*",
