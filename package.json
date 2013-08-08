@@ -11,12 +11,7 @@
     },
     "main": "./lib/brest.js",
     "dependencies": {
-        "async": "*",
-        "colors": "*",
-        "express": "3.1.1",
-        "express-validator": "0.3.0",
         "jayschema": "*",
-        "passport": "*",
         "underscore": "*"
     },
     "devDependencies": {
