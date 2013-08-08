@@ -7,30 +7,27 @@
     "description": "REST framework over express",
     "version": "0.0.1",
     "repository": {
-        "url": ""
+        "url": "https://github.com/MaximTovstashev/brest.git"
     },
     "main": "./lib/brest.js",
     "dependencies": {
+        "jayschema": "0.2.0",
+        "underscore": "1.5.1"
+    },
+    "devDependencies": {
         "jayschema": "*",
         "underscore": "*"
     },
-    "devDependencies": {
-        "async": "*",
-        "colors": "*",
-        "express": "3.1.1",
-        "express-validator": "0.3.0",
-        "jayschema": "*",
-        "passport": "*",
-        "underscore": "*"    },
     "keywords": [
+        "api",
+        "app",
         "express",
-        "framework",
-        "web",
+        "json-schema",
         "rest",
         "restful",
         "router",
-        "app",
-        "api"
+        "schema",
+        "web"
     ],
     "optionalDependencies": {},
     "engines": {
