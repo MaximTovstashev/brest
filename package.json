@@ -5,13 +5,14 @@
     },
     "name": "brest",
     "description": "REST framework over express",
-    "version": "0.0.1",
+    "version": "0.0.4",
     "repository": {
+        "type" : "git",
         "url": "https://github.com/MaximTovstashev/brest.git"
     },
-    "main": "./lib/brest.js",
+    "main": "./lib/brest",
     "dependencies": {
-        "jayschema": "0.2.0",
+        "jayschema": "*",
         "underscore": "1.5.1"
     },
     "devDependencies": {
