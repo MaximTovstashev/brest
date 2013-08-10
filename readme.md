@@ -1,16 +1,58 @@
-#bREST
-
-REST library over express.js
+#Brest
 
 ##About
 
-Simple API library over [express.js](http://expressjs.com/).
+Brest is a simple REST API library over [express.js](http://expressjs.com/).
 
-##Where is the manual?
+##How do I use it?
 
-I've just started with moving my library to the package and the documentation for the project is in TBD state. If
-you read this paragraph and you need something simple for REST API, please [email me](mailto:max.kitsch@gmail.com) and
-I will speed up the process.
+###1. Install from package manager
+
+If your project uses [package.json](https://npmjs.org/doc/json.html), simply include
+
+    "dependencies": {
+        ...
+        "brest": "*",
+        ...
+    }
+
+and then in the shell, in project root folder execute:
+
+    $ npm install
+
+Otherwise, you can install brest globally with npm and have it available from anywhere on your machine:
+
+    $ npm install -g brest
+
+###2 Setup
+####2.1 Application file
+
+In your application file:
+
+    // Require brest library
+    var brest = require("brest");
+
+    // Require and setup express
+    var express = require('express');
+
+    // Create express application object
+    var app = express();
+
+    // Initialize and setup express
+    ...
+
+    //Initialize and setup brest
+    brest(app);
+
+####2.2 Brest folders
+
+By default, Brest uses the following folders:
+
+* ./api — for the api scripts
+* ./schema — for json-schema files
+
+
+
 
 ##Changes
 
