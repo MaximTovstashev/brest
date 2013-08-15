@@ -114,6 +114,10 @@ the release as an npm package: watch for the updates.
 
 ##Changes
 
+####0.0.4-3
+
+When no filters are defined, *req.filters* is an empty Object, not undefined property.
+
 ####0.0.4-2
 
 Documentation update.
