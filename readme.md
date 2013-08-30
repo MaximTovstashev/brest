@@ -107,12 +107,65 @@ Resource object has the following structure (properties placed alphabetically):
 }
 ```
 
-###2.4 Docker
+###2.4 Settings
 
-Docker is automated documentation generator for the Brest. It is currently not included since it's being prepared for
-the release as an npm package: watch for the updates.
+Certain default settings may be overridden by providing user settings. Settings object is passed to the brest() as
+the second parameter.
+
+```javascript
+    var settings = {
+        apiPath: "/var/poject/myApi",                 //Path to API resources files
+        schemaLoader: "mySchemaLoader"    //User schema loader. Either the key of existing loader, or path to file
+        schemaURL: "local://schemas/"   //Json schema URL's. See JaySchema documentation.
+        schemaPath: "/var/poject/mySchemas"        //Path to .json files with json schemas
+    }
+
+    brest(app, settings);
+```
+
+###2.5 Setting up validation
+
+In current version you have to add express-validator manually.
+
+```javascript
+//In your main file:
+
+var expressValidator = require('express-validator`)
+
+//...
+
+app.use(expressValidator);
+```
+
+Note, that you will require version 0.3.0 for the project to work correctly. This would be fixed in the coming versions,
+as express-validator is to be replaced with the native wrapper.
+
+##3 Serving requests
+
+###3.1 Supported methods
+
+The following methods are being supported by Brest:
+
+```
+GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH, TRACE
+```
+
+If the request is send to existing URI with undefined method (say, you have GET /v1/kittens and POST /v1/kittens, but
+you try to DELETE /v1/kittens) brest will respond with 405 error code and response header will contain Allow field
+with "GET, POST"
+
+##4 Extensions
+
+###4.1 Docker
+
+[Docker](https://github.com/MaximTovstashev/brest-docker) extension automatically builds documentation for the Brest API function.
 
 ##Changes
+
+####0.0.4-4
+
+ - Changes in settings handling.
+ - Documentation update
 
 ####0.0.4-3
 
