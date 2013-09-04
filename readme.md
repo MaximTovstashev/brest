@@ -140,6 +140,47 @@ app.use(expressValidator);
 Note, that you will require version 0.3.0 for the project to work correctly. This would be fixed in the coming versions,
 as express-validator is to be replaced with the native wrapper.
 
+###2.6 Setting up authentication
+
+In current version, the only supported authentication library is [passport](https://npmjs.org/package/passport). It should
+be included manually into the project, and it's setup is also held outside Brest, since it may depend on data model level.
+
+Setup passport as it is supposed for express.js. Then, add some authorization resources for your authorization strategies.
+For instance, if we use [passport-local](https://npmjs.org/package/passport-local), we add the following resource:
+
+```javascript
+//api/auth.js (or any other api resource file of your choise)
+
+module.exports = {
+        {
+            description: function(){/*
+                Authorize using login and password
+
+                #####Parameters:
+                * **email** User email
+                * **password** User password
+
+                */},
+            method: "POST",
+            noAuth: true,
+            schema: "user-auth",
+            middle: passport.authenticate('local'),
+            handler: function(req,callback){
+                callback(null,{gatekeeper: "Confirmed"});
+            }
+        },
+        {
+            method: "GET",
+            uri: "logout",
+            handler: function(req, callback){
+                req.logout();
+                callback(null,{gatekeeper: "Have a nice day!"})
+            }
+        }
+//...
+}
+```
+
 ##3 Serving requests
 
 ###3.1 Supported methods
@@ -154,6 +195,68 @@ If the request is send to existing URI with undefined method (say, you have GET 
 you try to DELETE /v1/kittens) brest will respond with 405 error code and response header will contain Allow field
 with "GET, POST"
 
+###3.2 Request URL parameters
+
+Request parameters can be passed both as a part of the path and the query string. Path parameters are described in
+"uri" property of resource description object:
+
+```javascript
+    //...
+        uri: "/floor/:floorId/room/:roomId"
+    //...
+```
+
+Here *:floorId* and *:roomId* are path parameters and they would be accessible in req.params object as req.params.floorId
+and req.params.roomId respectively.
+
+Query strings are supposed to be described in *filters* property:
+
+```javascript
+    {
+        method: GET.
+        description: "Get car list",
+        noAuth: true,
+        filters: {
+            "manufacturer": "Filter by manufacturer",
+            "yom": "Filter by the year of manufacture",
+            "color": "Filter by color",
+        }
+    }
+```
+
+Filter values are stored in req.filters property as key:value.
+
+These properties description are used by Docker to create detailed description of the resource. You can also use
+user data replacement:
+
+```javascript
+//  api/user.js
+//...
+        {
+            method: "GET",
+            uri: "list",
+            description: "Returns users list",
+            filters: {
+                subscribed_to: {
+                    description: "Select user, subscribed to given user",
+                    replaceMe: 'id'
+                },
+                subscribed_by: {
+                    description: "Select user, subscribed by given user",
+                    replaceMe: 'id'
+                },
+                name: "Get users with names identical or close to given name"
+            },
+            handler: function(req,callback){
+                userCtrl.list(req.filters, callback);
+            }
+        }
+//...
+```
+
+In this case, if /v1/api/user?subscribed\_to=me is called, req.filters.subscribed\_to with be equal to req.user.id.
+If user in not authenticated or req.user doesn't contain ['id'] property, 403 error would be returned by server.
+
 ##4 Extensions
 
 ###4.1 Docker
@@ -161,6 +264,11 @@ with "GET, POST"
 [Docker](https://github.com/MaximTovstashev/brest-docker) extension automatically builds documentation for the Brest API function.
 
 ##Changes
+
+####0.0.4-5
+
+ - Now it is possible to define auto-replacement for "me" filter value
+ - Documentation update
 
 ####0.0.4-4
 
