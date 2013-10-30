@@ -78,7 +78,7 @@ Resource object has the following structure (properties placed alphabetically):
      * Handler function: receives Express JS object and a callback function.
      */
     handler: function(req, callback) {
-        callback(err, result);
+        callback(err, result, options);
     },
 
     /**
@@ -106,6 +106,16 @@ Resource object has the following structure (properties placed alphabetically):
 
 }
 ```
+
+####2.3.1 Possible options
+
+**ignoreJSON** {Boolean} use res.send() instead of res.json() even if return data is object. Can be useful, if you want to send json, as text/html, for some reason.
+
+**code** {Number||String} send responce with arbitrary code
+
+**headers** {Object} Set headers from {('key': 'value')} object.
+
+**cookies** {Array} Set cookies {name: "name", value: "value", options: {Object}}
 
 ###2.4 Settings
 
@@ -264,6 +274,10 @@ If user in not authenticated or req.user doesn't contain ['id'] property, 403 er
 [Docker](https://github.com/MaximTovstashev/brest-docker) extension automatically builds documentation for the Brest API function.
 
 ##Changes
+
+####0.0.4-6
+
+- Response options added
 
 ####0.0.4-5
 
