@@ -278,7 +278,7 @@ If user in not authenticated or req.user doesn't contain ['id'] property, 403 er
 ####0.0.5
 
 - File downloads added. Use response options "file" to send file to download and optional "fileName"
-to define filename.
+to define filename. Please note, that you won't be able to retrieve files using Ajax due to safety restrictions.
 
 ####0.0.4-6
 
