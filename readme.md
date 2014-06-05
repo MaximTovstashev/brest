@@ -29,20 +29,12 @@ Otherwise, you can install brest globally with npm and have it available from an
 
 In your application file:
 
+```javascript
     // Require brest library
-    var brest = require("brest");
+    var Brest = require("brest");
 
-    // Require and setup express
-    var express = require('express');
-
-    // Create express application object
-    var app = express();
-
-    // Initialize and setup express
-    ...
-
-    //Initialize and setup brest
-    brest(app);
+    var brest = Brest(settings)
+```
 
 ####2.2 Brest folders
 
@@ -111,7 +103,7 @@ Resource object has the following structure (properties placed alphabetically):
 
 **ignoreJSON** {Boolean} use res.send() instead of res.json() even if return data is object. Can be useful, if you want to send json, as text/html, for some reason.
 
-**code** {Number||String} send responce with arbitrary code
+**code** {Number||String} send response with arbitrary code
 
 **headers** {Object} Set headers from {('key': 'value')} object.
 
@@ -147,8 +139,7 @@ var expressValidator = require('express-validator`)
 app.use(expressValidator);
 ```
 
-Note, that you will require version 0.3.0 for the project to work correctly. This would be fixed in the coming versions,
-as express-validator is to be replaced with the native wrapper.
+
 
 ###2.6 Setting up authentication
 

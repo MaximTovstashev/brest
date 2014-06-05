@@ -10,24 +10,20 @@
         "type" : "git",
         "url": "https://github.com/MaximTovstashev/brest.git"
     },
-    "main": "./lib/brest",
+    "main": "index.js",
     "dependencies": {
-        "jayschema": "*",
         "underscore": "*"
     },
     "devDependencies": {
-        "jayschema": "*",
         "underscore": "*"
     },
     "keywords": [
         "api",
         "app",
         "express",
-        "json-schema",
         "rest",
         "restful",
         "router",
-        "schema",
         "web"
     ],
     "optionalDependencies": {},
