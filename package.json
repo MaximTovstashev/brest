@@ -14,14 +14,18 @@
     "dependencies": {
         "async": "*",
         "body-parser": "*",
+        "colors": "*",
         "express": "4.1.1",
-        "underscore": "1.6.0"
+        "morgan": "*",
+        "lodash": "*"
     },
     "devDependencies": {
         "async": "*",
         "body-parser": "*",
+        "colors": "*",
         "express": "*",
-        "underscore": "*"
+        "morgan": "*",
+        "lodash": "*"
     },
     "keywords": [
         "api",

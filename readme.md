@@ -32,8 +32,7 @@ In your application file:
 ```javascript
     // Require brest library
     var Brest = require("brest");
-
-    var brest = Brest(settings)
+    var brest = new Brest(require('%path_to_settings%'));
 ```
 
 ####2.2 Brest folders
@@ -41,7 +40,6 @@ In your application file:
 By default, Brest uses the following folders:
 
 * ./api — for the api scripts
-* ./schema — for json-schema files
 
 ####2.3 API script file structure
 
@@ -57,7 +55,7 @@ API scripts are expected to export object files with the following structure:
 }
 ```
 
-Here, the version property and the filename define the beginning of the methods' URI. For instance, if API object from ./api/user.js has property version: 1, the URI will start with /v1/user. After that, the resource
+Here, the version property and the filename define the beginning of the methods' URI. For instance, if API object from ./api/persons.js has property version: 1, the URI will start with /v1/user. After that, the resource
 objects description is used:
 
 Resource object has the following structure (properties placed alphabetically):
@@ -73,24 +71,9 @@ Resource object has the following structure (properties placed alphabetically):
         callback(err, result, options);
     },
 
-    /**
-     * Validation method. It is supposed to use express-validator (assertion part of it), but it can be
-     * also used as a custom validator. Any data returned by this method will be considered as an error message
-     */
-    validator: function(req){
-        req.assert('fooId').notEmpty().isNumeric();
-    },
-
     method: "POST", //or any other HTTP method
 
-    /**
-     * Middleware. E.g. passport authentication middleware. Required mostly in auth resources.
-     **/
-    middle: passport.authenticate('local'),
-
     noAuth: false, //default: false. If true, no authentication is needed for this resource
-
-    schema: "resource-schema", //Json-schema id. See "JSON validation" (TBD now)
 
     stub: false, //default: false. If true, resource returns "Not implemented yet" message.
 
@@ -99,7 +82,9 @@ Resource object has the following structure (properties placed alphabetically):
 }
 ```
 
-####2.3.1 Possible options
+####2.3.1 Possible response options
+
+Add to the response object for the handler callback
 
 **ignoreJSON** {Boolean} use res.send() instead of res.json() even if return data is object. Can be useful, if you want to send json, as text/html, for some reason.
 
@@ -109,6 +94,10 @@ Resource object has the following structure (properties placed alphabetically):
 
 **cookies** {Array} Set cookies {name: "name", value: "value", options: {Object}}
 
+**file** {String} Send file to user. 
+
+**redirect** {String} Redirect user to given URL
+
 ###2.4 Settings
 
 Certain default settings may be overridden by providing user settings. Settings object is passed to the brest() as
@@ -116,71 +105,19 @@ the second parameter.
 
 ```javascript
     var settings = {
-        apiPath: "/var/poject/myApi",                 //Path to API resources files
-        schemaLoader: "mySchemaLoader"    //User schema loader. Either the key of existing loader, or path to file
-        schemaURL: "local://schemas/"   //Json schema URL's. See JaySchema documentation.
-        schemaPath: "/var/poject/mySchemas"        //Path to .json files with json schemas
+        application: "%app_name%",      // Application name
+        environment: "dev",             // Environmen type
+        version: 1,                     // API default version
+        server: {
+            port: 8080                  // Listed on port
+        },
+        static: {
+            public: "public"            // Public folder path
+        }
     }
 
-    brest(app, settings);
 ```
 
-###2.5 Setting up validation
-
-In current version you have to add express-validator manually.
-
-```javascript
-//In your main file:
-
-var expressValidator = require('express-validator`)
-
-//...
-
-app.use(expressValidator);
-```
-
-
-
-###2.6 Setting up authentication
-
-In current version, the only supported authentication library is [passport](https://npmjs.org/package/passport). It should
-be included manually into the project, and it's setup is also held outside Brest, since it may depend on data model level.
-
-Setup passport as it is supposed for express.js. Then, add some authorization resources for your authorization strategies.
-For instance, if we use [passport-local](https://npmjs.org/package/passport-local), we add the following resource:
-
-```javascript
-//api/auth.js (or any other api resource file of your choise)
-
-module.exports = {
-        {
-            description: function(){/*
-                Authorize using login and password
-
-                #####Parameters:
-                * **email** User email
-                * **password** User password
-
-                */},
-            method: "POST",
-            noAuth: true,
-            schema: "user-auth",
-            middle: passport.authenticate('local'),
-            handler: function(req,callback){
-                callback(null,{gatekeeper: "Confirmed"});
-            }
-        },
-        {
-            method: "GET",
-            uri: "logout",
-            handler: function(req, callback){
-                req.logout();
-                callback(null,{gatekeeper: "Have a nice day!"})
-            }
-        }
-//...
-}
-```
 
 ##3 Serving requests
 
@@ -231,7 +168,7 @@ These properties description are used by Docker to create detailed description o
 user data replacement:
 
 ```javascript
-//  api/user.js
+//  api/persons.js
 //...
         {
             method: "GET",
@@ -260,9 +197,25 @@ If user in not authenticated or req.user doesn't contain ['id'] property, 403 er
 
 ##4 Extensions
 
-###4.1 Docker
+###4.1 Current
 
-[Docker](https://github.com/MaximTovstashev/brest-docker) extension automatically builds documentation for the Brest API function.
+#### Authentication
+
+[Passport](https://github.com/MaximTovstashev/brest-passport) Authenticating user with PassportJS
+
+#### Database handling
+
+[MariaDB](https://github.com/MaximTovstashev/brest-maria) MariaDB (unstable!)
+
+#### Validation
+[Jayschema](https://github.com/MaximTovstashev/brest-jayschema) JaySchema POST Json Schema validation
+[Validation](https://github.com/MaximTovstashev/brest-jayschema) Request params validation
+
+
+###4.2 Obsolete
+
+[Docker](https://github.com/MaximTovstashev/brest-docker) (obsolete!) extension automatically builds documentation for the Brest API function.
+This extension is currently not supported.
 
 ##Changes
 
