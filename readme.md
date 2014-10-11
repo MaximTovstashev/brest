@@ -219,6 +219,12 @@ This extension is currently not supported.
 
 ##Changes
 
+####0.1.0
+
+- Moved express initialization into the bREST logic.
+- Moved validation into the extensions
+- Moved authentication into the extensions
+
 ####0.0.5
 
 - File downloads added. Use response options "file" to send file to download and optional "fileName"
