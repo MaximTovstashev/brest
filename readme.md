@@ -1,12 +1,12 @@
-#Brest
+# Brest
 
-##About
+## About
 
 Brest is a simple REST API library over [express.js](http://expressjs.com/).
 
-##How do I use it?
+## How do I use it?
 
-###1. Install from package manager
+### 1. Install from package manager
 
 If your project uses [package.json](https://npmjs.org/doc/json.html), simply include
 
@@ -24,8 +24,8 @@ Otherwise, you can install brest globally with npm and have it available from an
 
     $ npm install -g brest
 
-###2 Setup
-####2.1 Application file
+### 2 Setup
+#### 2.1 Application file
 
 In your application file:
 
@@ -35,13 +35,13 @@ In your application file:
     var brest = new Brest(require('%path_to_settings%'));
 ```
 
-####2.2 Brest folders
+#### 2.2 Brest folders
 
 By default, Brest uses the following folders:
 
 * ./api — for the api scripts
 
-####2.3 API script file structure
+#### 2.3 API script file structure
 
 API scripts are expected to export object files with the following structure:
 
@@ -82,7 +82,7 @@ Resource object has the following structure (properties placed alphabetically):
 }
 ```
 
-####2.3.1 Possible response options
+#### 2.3.1 Possible response options
 
 Add to the response object for the handler callback
 
@@ -94,11 +94,15 @@ Add to the response object for the handler callback
 
 **cookies** {Array} Set cookies {name: "name", value: "value", options: {Object}}
 
-**file** {String} Send file to user. 
+**file** {String} Send file to user.
+
+**fileName** {String} Provide this file with specific name.
+
+**fileCallback** {String} Specify function to call when user has finished downloading.
 
 **redirect** {String} Redirect user to given URL
 
-###2.4 Settings
+### 2.4 Settings
 
 Certain default settings may be overridden by providing user settings. Settings object is passed to the brest() as
 the second parameter.
@@ -119,9 +123,9 @@ the second parameter.
 ```
 
 
-##3 Serving requests
+## 3 Serving requests
 
-###3.1 Supported methods
+### 3.1 Supported methods
 
 The following methods are being supported by Brest:
 
@@ -133,7 +137,7 @@ If the request is send to existing URI with undefined method (say, you have GET 
 you try to DELETE /v1/kittens) brest will respond with 405 error code and response header will contain Allow field
 with "GET, POST"
 
-###3.2 Request URL parameters
+### 3.2 Request URL parameters
 
 Request parameters can be passed both as a part of the path and the query string. Path parameters are described in
 "uri" property of resource description object:
@@ -195,9 +199,9 @@ user data replacement:
 In this case, if /v1/api/user?subscribed\_to=me is called, req.filters.subscribed\_to with be equal to req.user.id.
 If user in not authenticated or req.user doesn't contain ['id'] property, 403 error would be returned by server.
 
-##4 Extensions
+## 4 Extensions
 
-###4.1 Current
+### 4.1 Current
 
 #### Authentication
 
@@ -212,59 +216,69 @@ If user in not authenticated or req.user doesn't contain ['id'] property, 403 er
 [Validation](https://github.com/MaximTovstashev/brest-jayschema) Request params validation
 
 
-###4.2 Obsolete
+### 4.2 Obsolete
 
-[Docker](https://github.com/MaximTovstashev/brest-docker) (obsolete!) extension automatically builds documentation for the Brest API function.
+[Docker](https://github.com/MaximTovstashev/brest-docker) Extension automatically builds documentation for the Brest API function.
 This extension is currently not supported.
 
-##Changes
+## Changes
 
-####0.1.0
+#### 0.1.2
+
+- It is now possible to use callbacks for file downloads
+- Fixed bug with multiple extension loading
+- Changed authenticate callback check from _.isUndefined to _.isNull
+
+#### 0.1.1
+
+- Async module initialization
+
+#### 0.1.0
 
 - Moved express initialization into the bREST logic.
 - Moved validation into the extensions
 - Moved authentication into the extensions
 
-####0.0.5
+#### 0.0.5
 
 - File downloads added. Use response options "file" to send file to download and optional "fileName"
 to define filename. Please note, that you won't be able to retrieve files using Ajax due to safety restrictions.
 
-####0.0.4-6
+#### 0.0.4-6
 
 - Response options added
 
-####0.0.4-5
+#### 0.0.4-5
 
  - Now it is possible to define auto-replacement for "me" filter value
  - Documentation update
 
-####0.0.4-4
+#### 0.0.4-4
 
  - Changes in settings handling.
  - Documentation update
 
-####0.0.4-3
+#### 0.0.4-3
 
 When no filters are defined, *req.filters* is an empty Object, not undefined property.
 
-####0.0.4-2
+#### 0.0.4-2
 
 Documentation update.
 
-####0.0.4-1
+#### 0.0.4-1
 
 Fixed issue with loading JSON-schema files.
 
-###0.0.4
+### 0.0.4
 
 Fixed issue with URL parameters passed to method with no described filters.
 
-###0.0.3
+### 0.0.3
 
 First working version.
 
-##MIT License
+## MIT License
 
 Copyright © 2013 Maxim Tovstashev <max.kitsch@gmail.com>
 
