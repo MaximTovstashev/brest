@@ -209,11 +209,12 @@ If user in not authenticated or req.user doesn't contain ['id'] property, 403 er
 
 #### Database handling
 
-[MariaDB](https://github.com/MaximTovstashev/brest-maria) MariaDB (unstable!)
+- [MariaDB](https://github.com/MaximTovstashev/brest-maria) MariaDB (abandoned, use MySQL instead!)
+- [MySQL](https://github.com/MaximTovstashev/brest-mysql) MySQL
 
 #### Validation
-[Jayschema](https://github.com/MaximTovstashev/brest-jayschema) JaySchema POST Json Schema validation
-[Validation](https://github.com/MaximTovstashev/brest-jayschema) Request params validation
+- [Jayschema](https://github.com/MaximTovstashev/brest-jayschema) JaySchema POST Json Schema validation
+- [Validation](https://github.com/MaximTovstashev/brest-jayschema) Request params validation
 
 
 ### 4.2 Obsolete
@@ -222,6 +223,15 @@ If user in not authenticated or req.user doesn't contain ['id'] property, 403 er
 This extension is currently not supported.
 
 ## Changes
+
+#### 0.1.4
+
+- It is now possible to bind multiple API paths
+- Fixed some obsolete Express methods calls
+
+#### 0.1.3
+
+- Multer fix
 
 #### 0.1.2
 
