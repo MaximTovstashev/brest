@@ -224,6 +224,10 @@ This extension is currently not supported.
 
 ## Changes
 
+#### 0.1.4-1
+
+- Fixed issue with Express crashing on empty return
+
 #### 0.1.4
 
 - It is now possible to bind multiple API paths
