@@ -214,7 +214,7 @@ If user in not authenticated or req.user doesn't contain ['id'] property, 403 er
 
 #### Validation
 - [Jayschema](https://github.com/MaximTovstashev/brest-jayschema) JaySchema POST Json Schema validation
-- [Validation](https://github.com/MaximTovstashev/brest-jayschema) Request params validation
+- [Validation](https://github.com/MaximTovstashev/brest-validate) Request params validation
 
 
 ### 4.2 Obsolete
@@ -223,6 +223,14 @@ If user in not authenticated or req.user doesn't contain ['id'] property, 403 er
 This extension is currently not supported.
 
 ## Changes
+
+#### 0.1.5
+
+- Fixed issues with Multer initialization
+- Took new features from bmrest fork
+- "noCache" method parameter (bmrest) will sent no-caching headers
+- "toArray" filter parameter will cast filter value to array if it's not an array already
+- "include" method parameters (bmrest compat.) will add "include" array to request object
 
 #### 0.1.4-1
 
