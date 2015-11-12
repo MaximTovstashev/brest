@@ -224,6 +224,12 @@ This extension is currently not supported.
 
 ## Changes
 
+#### 0.1.5-1
+
+- Some colors added
+- Brest.close() method added. Closes server, emits "closing" on start and "closed" on finish
+- New event emitters "closing" and "closed"
+
 #### 0.1.5
 
 - Fixed issues with Multer initialization
