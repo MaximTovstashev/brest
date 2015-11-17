@@ -224,6 +224,10 @@ This extension is currently not supported.
 
 ## Changes
 
+#### 0.1.5-3
+
+-  fixed undefined var for req.include
+
 #### 0.1.5-1
 
 - Some colors added
