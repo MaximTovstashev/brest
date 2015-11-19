@@ -199,9 +199,68 @@ user data replacement:
 In this case, if /v1/api/user?subscribed\_to=me is called, req.filters.subscribed\_to with be equal to req.user.id.
 If user in not authenticated or req.user doesn't contain ['id'] property, 403 error would be returned by server.
 
-## 4 Extensions
+## 4 Events
 
-### 4.1 Current
+Brest instance, once setup emits various events, that can be used to further extend it's functionality.
+
+- **ready**: Brest has successfully initialized express and http server and ready to proceed with further initializations.
+ As most of the Brest extensions are either loading express middlware or require initialized express instance it is reasonable to
+ proceed with extensions initializations once this event fires:
+
+ ```javascript
+         var brest = new Brest(settings);
+
+         brest.on('ready', function() {
+         	            brest.use(
+                            [   BrestValidate,
+                                BrestJaySchema,
+                                BrestPassport]);
+         }
+ ```
+
+ - **extensionsLoaded**: all extensions passed to brest.use have been initialized. At this point API path is to be bound.
+
+  ```javascript
+	brest.on('extensionsLoaded', function() {
+	    	brest.bindPath(settings.server.api, function(err){
+		        	if (err) {
+				            log.debug(err);
+			        }
+	        });
+	});
+  ```
+
+  - **closing**: Brest is shutting down, but it still has some matters to attend. If you need to catch the moment pass which
+   you shouldn't do anything with Brest, you should catch this event.
+
+  - **closed**: Brest is lying dead and waiting for garbage collector. If you need to clean up references to the Brest instance, you
+  can do it from here.
+
+  - **counter**: Some counter has reached the predefined point. The counters can be set up in Brest settings as follows:
+  ```javascript
+  {
+     emitCounterEventOn: {
+        in: [100, 1000, 1701], // Emit counter event every 100, 1000 and 1701 incoming request
+        out: [42] // Emit counter event every 42 requests served
+        process: [64, 128] //Emit on 64 or 128 concurrent requests being served
+     }
+  }
+  ```
+
+  As a parameter event listener receives an object {<counter_key>: <counter_value>}. The following counter keys are now being used:
+
+*in*: Counter is increased for every incoming request, before it is processed.
+
+*out*: Counter is increased for every outcoming responce, after all processing is done.
+
+*process*: Counter is increased for evety incoming request and decreased for every responce sent back to client. Thus it represents
+the number of concurrent requests and can be used to estimate current load.
+
+- **error**: Something wrong has happened. Event listener receives error object as a parameter.
+
+## 5 Extensions
+
+### 5.1 Current
 
 #### Authentication
 
@@ -217,7 +276,7 @@ If user in not authenticated or req.user doesn't contain ['id'] property, 403 er
 - [Validation](https://github.com/MaximTovstashev/brest-validate) Request params validation
 
 
-### 4.2 Obsolete
+### 5.2 Obsolete
 
 [Docker](https://github.com/MaximTovstashev/brest-docker) Extension automatically builds documentation for the Brest API function.
 This extension is currently not supported.
