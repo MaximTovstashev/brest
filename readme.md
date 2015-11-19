@@ -224,6 +224,10 @@ This extension is currently not supported.
 
 ## Changes
 
+#### 0.1.5-2
+
+- Settings defaults are using deep copy
+
 #### 0.1.5-1
 
 - Some colors added
