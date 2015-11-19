@@ -5,7 +5,7 @@
     },
     "name": "brest",
     "description": "REST framework over express.js",
-    "version": "0.1.5-2",
+    "version": "0.1.5-1",
     "repository": {
         "type" : "git",
         "url": "https://github.com/MaximTovstashev/brest.git"
