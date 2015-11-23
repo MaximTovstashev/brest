@@ -275,6 +275,11 @@ the number of concurrent requests and can be used to estimate current load.
 - [Jayschema](https://github.com/MaximTovstashev/brest-jayschema) JaySchema POST Json Schema validation
 - [Validation](https://github.com/MaximTovstashev/brest-validate) Request params validation
 
+#### Secutiry
+
+- [Limiter](https://github.com/MaximTovstashev/brest-redis-limiter) Request limiter using redis db and
+express-limiter library
+
 
 ### 5.2 Obsolete
 
@@ -282,6 +287,18 @@ the number of concurrent requests and can be used to estimate current load.
 This extension is currently not supported.
 
 ## Changes
+
+#### 0.1.7
+
+- Extensions now can have separate init functions for resources and methods
+- Resources and methods now emit "ready" and "error" events (can be caught in extensions)
+- Async resource and methods initialization (no actual changes outside)
+- Some code refactoring
+
+#### 0.1.6
+
+- Added new events
+- Introduced counters
 
 #### 0.1.5-3
 
