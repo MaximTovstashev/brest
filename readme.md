@@ -288,6 +288,10 @@ This extension is currently not supported.
 
 ## Changes
 
+#### 0.1.8-1
+
+- Fixed bug with counter not being reset;
+
 #### 0.1.8
 
 - brest.getPort() method added
