@@ -288,6 +288,14 @@ This extension is currently not supported.
 
 ## Changes
 
+#### 0.1.8
+
+- brest.getPort() method added
+- brest.close() now has safeguard from multiple calls
+- express request logging can be switched off with log:false setting
+- overloading safeguard added
+- lesser changes
+
 #### 0.1.7
 
 - Extensions now can have separate init functions for resources and methods

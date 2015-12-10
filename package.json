@@ -5,7 +5,7 @@
     },
     "name": "brest",
     "description": "REST framework over express.js",
-    "version": "0.1.7",
+    "version": "0.1.8",
     "repository": {
         "type" : "git",
         "url": "https://github.com/MaximTovstashev/brest.git"
@@ -16,18 +16,21 @@
         "body-parser": "*",
         "colors": "*",
         "express": "4.x",
+        "lodash": "*",
         "morgan": "*",
         "multer": "*",
-        "lodash": "*"
+        "toobusy-js": "*"
+
     },
     "devDependencies": {
         "async": "*",
         "body-parser": "*",
         "colors": "*",
         "express": "*",
+        "lodash": "*",
         "morgan": "*",
         "multer": "*",
-        "lodash": "*"
+        "toobusy-js": "*"
     },
     "keywords": [
         "api",
