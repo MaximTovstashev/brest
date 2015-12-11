@@ -288,6 +288,11 @@ This extension is currently not supported.
 
 ## Changes
 
+#### 0.1.8-2
+
+- Rolled back bugfix for 0.1.8-1 as it breaks usage of arrays in counters setup
+- Toobusy can be not provided with settings (see https://www.npmjs.com/package/toobusy-js)
+
 #### 0.1.8-1
 
 - Fixed bug with counter not being reset;
