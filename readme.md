@@ -288,6 +288,10 @@ This extension is currently not supported.
 
 ## Changes
 
+#### 0.1.8-3
+
+- Toobusy settings: fixed 'interval' setting, added 'enabled' setting
+
 #### 0.1.8-2
 
 - Rolled back bugfix for 0.1.8-1 as it breaks usage of arrays in counters setup
