@@ -48,7 +48,7 @@ API scripts are expected to export object files with the following structure:
 ```javascript
 {
     version: 1,
-    description: "Path description" //Description for the Docker
+    description: "Resource description" //Description for the Docker
     resources: [
         //Here come the resource objects
     ]
@@ -58,7 +58,7 @@ API scripts are expected to export object files with the following structure:
 Here, the version property and the filename define the beginning of the methods' URI. For instance, if API object from ./api/persons.js has property version: 1, the URI will start with /v1/user. After that, the resource
 objects description is used:
 
-Path object has the following structure (properties placed alphabetically):
+Resource object has the following structure (properties placed alphabetically):
 
 ```javascript
 {
@@ -381,6 +381,10 @@ the default HTTP method is GET and if handler is skipped, empty handler which re
 - TooBusy now returns 429 code instead of 503
 - Fixed issue with incorrect settings format crashing the application
 - Fixed "Authentication failed" error message
+
+#### 0.1.8-3
+
+- Toobusy settings: fixed 'interval' setting, added 'enabled' setting
 
 #### 0.1.8-2
 
