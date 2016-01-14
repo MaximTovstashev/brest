@@ -48,7 +48,7 @@ API scripts are expected to export object files with the following structure:
 ```javascript
 {
     version: 1,
-    description: "Resource description" //Description for the Docker
+    description: "Path description" //Description for the Docker
     resources: [
         //Here come the resource objects
     ]
@@ -58,22 +58,30 @@ API scripts are expected to export object files with the following structure:
 Here, the version property and the filename define the beginning of the methods' URI. For instance, if API object from ./api/persons.js has property version: 1, the URI will start with /v1/user. After that, the resource
 objects description is used:
 
-Resource object has the following structure (properties placed alphabetically):
+Path object has the following structure (properties placed alphabetically):
 
 ```javascript
 {
+    enabled: ['foobar'], //Enable condition. See 2.4 Enable/disable conditions
+
     description: "Some description goes here", //Description for the Docker
+
+    disabled: {environment: 'dev'} //Disable condition. See 2.4 Enable/disable conditions
 
     /**
      * Handler function: receives Express JS object and a callback function.
+     * If no handler provided, blank handler will return error
      */
     handler: function(req, callback) {
         callback(err, result, options);
     },
 
-    method: "POST", //or any other HTTP method
+    method: "POST", //default: GET. HTTP method required.
 
     noAuth: false, //default: false. If true, no authentication is needed for this resource
+
+
+    screen: {noAuth: ['some_field']}, //Remove fields from response. Currently for noAuth only
 
     stub: false, //default: false. If true, resource returns "Not implemented yet" message.
 
@@ -120,6 +128,77 @@ the second parameter.
         }
     }
 
+```
+
+### 2.4 Enable/disable conditions
+
+Path objects can be enabled or disabled by certain settings conditions.
+
+**enabled** property defines which settings are
+ required for the path to be used. **ALL** conditions must be met in order for path to be used.
+
+**disabled** property is responsible for switching off the path. **ANY** condition must be met for the path to be
+  disabled.
+
+First enabled conditions are checked, and then disabled conditions are checked. Which means, if settings meet both
+conditions, the path will be disabled disregarding 'enabled' condition.
+
+#### 2.4.1 Conditions setup
+
+The following formats are possible (appliable for "disabled" as well):
+
+
+```
+enabled: true|false;
+```
+If condition is *Boolean* it does what it means. Disable or enable path depending on boolean value.
+
+
+```
+enabled: 'stringCondition';
+```
+If condition is *String*, settings value for 'stringCondition' key is required to be **true** for condition to fire. It is
+possible to use dot to check nested settings key. For instance:
+
+```
+enabled: 'property_pingable.foobar';
+```
+
+will check brest settings object for
+
+```javascript
+var settings = {
+   //...
+   property_pingable: {
+       foobar: true;
+   }
+   //...
+}
+```
+
+Missing settings are treated as once having **false** value
+
+
+```
+ enabled: ['stringCondition1', 'stringCondition2'];
+```
+If condition is *Array*, it should contain strings, that will be cheched in the same manner as single string. For
+condition to be met it is required for all settings, described in array to be **true**
+
+
+```
+ enabled: {environment: 'dev', enable_selected_paths: true};
+```
+If condition is *Object*, for each object property the value should be equal (non strict, ==) to one in the settings.
+Nested settings are described same as in previous options. I.e.
+```
+ enabled: {'property_pingable.foobar': true}; //CORRECT
+
+
+ enabled: {property_pingable: { //INCORRECT
+              foobar': true
+          			}
+		      };
 ```
 
 
@@ -198,6 +277,9 @@ user data replacement:
 
 In this case, if /v1/api/user?subscribed\_to=me is called, req.filters.subscribed\_to with be equal to req.user.id.
 If user in not authenticated or req.user doesn't contain ['id'] property, 403 error would be returned by server.
+
+By default 'me' and 'mine' are replaced with current user id. It is possible to add more replacements by 'replaceMe'
+setting. (e.g. settings.replaceMe = ['own', 'private']).
 
 ## 4 Events
 
@@ -288,10 +370,22 @@ This extension is currently not supported.
 
 ## Changes
 
+#### 0.1.9
+
+- Enable/disable conditions
+- Response fields screening (currently for noAuth case only. Role screening en route)
+- Path description fields are not limited to the predefined list, nor the required fields are checked. However,
+the default HTTP method is GET and if handler is skipped, empty handler which returns error is used instead.
+- It is now possible to add new replacement keys to replaceMe (settings: replaceMe)
+- getBrest() method in available in Method and Path objects. Usable in plugins.
+- TooBusy now returns 429 code instead of 503
+- Fixed issue with incorrect settings format crashing the application
+- Fixed "Authentication failed" error message
+
 #### 0.1.8-2
 
 - Rolled back bugfix for 0.1.8-1 as it breaks usage of arrays in counters setup
-- Toobusy can be not provided with settings (see https://www.npmjs.com/package/toobusy-js)
+- Toobusy can be now provided with settings (see https://www.npmjs.com/package/toobusy-js)
 
 #### 0.1.8-1
 
