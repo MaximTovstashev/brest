@@ -281,6 +281,17 @@ If user in not authenticated or req.user doesn't contain ['id'] property, 403 er
 By default 'me' and 'mine' are replaced with current user id. It is possible to add more replacements by 'replaceMe'
 setting. (e.g. settings.replaceMe = ['own', 'private']).
 
+### 3.3 Logging requests
+
+Brest uses [mogran](https://github.com/expressjs/morgan) library to log requests. Starting from v0.1.10 it is
+possible to adjust logging as follows:
+
+- default: *true*
+- boolean: *false* disables logging, *true* enables with default settings ('combined' format, no additional options)
+- string: will load corresponding format without any additional settings.
+- morgan instance: use pre-initialized morgan instance.
+- object: {\<%format%>: {\<%settings%>}}. Load **morgan(\<%format%>, \<%settings%>)**
+
 ## 4 Events
 
 Brest instance, once setup emits various events, that can be used to further extend it's functionality.
@@ -369,6 +380,15 @@ express-limiter library
 This extension is currently not supported.
 
 ## Changes
+
+#### 0.1.10
+
+- Fixed issue with description field overriden. Now plugins are supposed to use "getField('name')" instead
+of "method.description['name']" and "getFields()" instead of "method.description" where appliable.
+- Morgan loggins is now adjustable with settings.log field (see "Logging")
+- brest.getSetting now uses [_.get()](https://lodash.com/docs#get), which means some more sintax variations in addition
+to existing ones. Please, refer to lodash tutorial for details.
+- Function that gets methods verb is now called "getVerb()" not "getMethod()"
 
 #### 0.1.9
 
