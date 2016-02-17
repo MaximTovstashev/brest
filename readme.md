@@ -381,6 +381,10 @@ This extension is currently not supported.
 
 ## Changes
 
+#### 0.1.11
+
+- Brest now emits 'error' event on all errors
+
 #### 0.1.10
 
 - Fixed issue with description field overriden. Now plugins are supposed to use "getField('name')" instead
