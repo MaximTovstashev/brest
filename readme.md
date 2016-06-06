@@ -363,6 +363,7 @@ the number of concurrent requests and can be used to estimate current load.
 
 - [MariaDB](https://github.com/MaximTovstashev/brest-maria) MariaDB (abandoned, use MySQL instead!)
 - [MySQL](https://github.com/MaximTovstashev/brest-mysql) MySQL
+- [PostgreSQL](https://github.com/MaximTovstashev/brest-pg) PostgreSQL (work in progress)
 
 #### Validation
 - [Jayschema](https://github.com/MaximTovstashev/brest-jayschema) JaySchema POST Json Schema validation
@@ -380,6 +381,12 @@ express-limiter library
 This extension is currently not supported.
 
 ## Changes
+
+#### 0.1.12
+
+- Unauthorized request will now return 401 instead of 403.
+- Authentication extensions now should return "false" or castable to "false" if no error is found,
+and an error object in case of error.
 
 #### 0.1.11
 
