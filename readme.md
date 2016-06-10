@@ -81,6 +81,13 @@ Resource object has the following structure (properties placed alphabetically):
     noAuth: false, //default: false. If true, no authentication is needed for this resource
 
 
+	/**
+	 * Obsolete method flag
+	 * If true, warning message is written to console each time the method is called
+     * Optionally can be a string with proposed new uri
+     */
+    obsolete: true|"new/uri",
+
     screen: {noAuth: ['some_field']}, //Remove fields from response. Currently for noAuth only
 
     stub: false, //default: false. If true, resource returns "Not implemented yet" message.
@@ -247,7 +254,7 @@ Query strings are supposed to be described in *filters* property:
 
 Filter values are stored in req.filters property as key:value.
 
-These properties description are used by Docker to create detailed description of the resource. You can also use
+These properties description are used by documentation creation scripts to create detailed description of the resource. You can also use
 user data replacement:
 
 ```javascript
@@ -280,6 +287,41 @@ If user in not authenticated or req.user doesn't contain ['id'] property, 403 er
 
 By default 'me' and 'mine' are replaced with current user id. It is possible to add more replacements by 'replaceMe'
 setting. (e.g. settings.replaceMe = ['own', 'private']).
+
+It is possible to automatically transform filter values. The following transformations can be used:
+
+- *toLowerCase*: transform filter value to lower case
+- *toUpperCase*: transform filter value to upper case
+- *transform*: provide custom transformation synchronous function
+
+```javascript
+//...
+        {
+            method: "GET",
+            uri: "list",
+            description: "Returns users list",
+            filters: {
+                username: {
+                    description: "Filter by username",
+                    toLowerCase: true
+                },
+                city_code: {
+                    description: "Filter by city code",
+                    toUpperCase: true
+                },
+                secret_nickname: {
+					description: "Filter by secret nick name",
+					transform: function(value) {
+						return decypherSecretNickname(value);
+					}
+                }
+            },
+            handler: function(req,callback){
+                userCtrl.list(req.filters, callback);
+            }
+        }
+//...
+```
 
 ### 3.3 Logging requests
 
@@ -381,6 +423,11 @@ express-limiter library
 This extension is currently not supported.
 
 ## Changes
+
+#### 0.1.13
+
+- Introduced "obsolete" method description field.
+- Filter transformation options added
 
 #### 0.1.12
 
