@@ -424,6 +424,13 @@ This extension is currently not supported.
 
 ## Changes
 
+#### 0.1.14
+
+- toArray filter param now explodes string value to array
+- toUpperCase filter param no longer fires if filter description is a string
+- Introduced "reject" method description field
+- "error" field in error reply now has lowercase key (before: Error → now: error)
+
 #### 0.1.13
 
 - Introduced "obsolete" method description field.
