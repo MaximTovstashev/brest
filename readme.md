@@ -453,6 +453,10 @@ This extension is currently not supported.
 
 ## Changes
 
+#### 0.1.16
+
+- "toBoolean" transformation function fixed
+
 #### 0.1.15
 
 - Added "filterAlias" API parameter to create filter shortcut. You can also use an "alias" filter parameter
