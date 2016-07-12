@@ -453,6 +453,10 @@ This extension is currently not supported.
 
 ## Changes
 
+#### 0.1.16-1
+
+- Fixed: Skips "include" field, if found in filters
+
 #### 0.1.16
 
 - "toBoolean" transformation function fixed
