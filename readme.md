@@ -294,9 +294,19 @@ setting. (e.g. settings.replaceMe = ['own', 'private']).
 
 It is possible to automatically transform filter values. The following transformations can be used:
 
+- *toArray*: transform comma-separated string into array. If provided with string value, it will be used as custom separator. 
+This transformation is made **before** any other. Unless stated otherwise, transformation filters will be applied to each array element separately.
 - *toLowerCase*: transform filter value to lower case
 - *toUpperCase*: transform filter value to upper case
+- *toFinite*: transform filter value to finite number
+- *toInteger*: transform filter value to integer
+- *toNumber*: transform filter value to number
+- *toBoolean*: transform filter value to boolean
+- *min*, *max*: limit numeric filter value. Consider using transformation to number with this parameters.
+- *clamp*: takes array of [min, max], ensures value stays between these numbers. Pre-cast to number is recommended as well. 
 - *transform*: provide custom transformation synchronous function
+
+Please, note, that transform filters are always applied before value limit filters and custom transform is applied the last.
 
 ```javascript
 //...
@@ -432,7 +442,6 @@ the number of concurrent requests and can be used to estimate current load.
 
 #### Database handling
 
-- [MariaDB](https://github.com/MaximTovstashev/brest-maria) MariaDB (abandoned, use MySQL instead!)
 - [MySQL](https://github.com/MaximTovstashev/brest-mysql) MySQL
 - [PostgreSQL](https://github.com/MaximTovstashev/brest-pg) PostgreSQL (work in progress)
 
@@ -448,10 +457,18 @@ express-limiter library
 
 ### 5.2 Obsolete
 
-[Docker](https://github.com/MaximTovstashev/brest-docker) Extension automatically builds documentation for the Brest API function.
+- [Docker](https://github.com/MaximTovstashev/brest-docker) Extension automatically builds documentation for the Brest API function.
 This extension is currently not supported.
+- [MariaDB](https://github.com/MaximTovstashev/brest-maria) MariaDB (abandoned, use MySQL instead!)
 
 ## Changes
+
+#### 0.2.0
+
+- Inner objects are now ES6 classes
+- Filter transformations are now separate clases
+- Fixed issue with event listeners being initialized after the events are fired
+- Added "min", "max", and "clamp" filter parameters
 
 #### 0.1.16-1
 
