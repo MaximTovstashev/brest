@@ -301,7 +301,7 @@ This transformation is made **before** any other. Unless stated otherwise, trans
 - *toFinite*: transform filter value to finite number
 - *toInteger*: transform filter value to integer
 - *toNumber*: transform filter value to number
-- *toBoolean*: transform filter value to boolean
+- *toBoolean*: transform filter value to boolean. Note, that strings *"false"* and *"0"* are cast to boolean **false**
 - *min*, *max*: limit numeric filter value. Consider using transformation to number with this parameters.
 - *clamp*: takes array of [min, max], ensures value stays between these numbers. Pre-cast to number is recommended as well. 
 - *transform*: provide custom transformation synchronous function
