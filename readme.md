@@ -463,6 +463,11 @@ This extension is currently not supported.
 
 ## Changes
 
+#### 0.2.1
+
+- Fixed issue with multiple API files crashing the startup
+- Some inner refactoring
+
 #### 0.2.0
 
 - Inner objects are now ES6 classes
