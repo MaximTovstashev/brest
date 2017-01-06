@@ -62,6 +62,8 @@ Resource object has the following structure (properties placed alphabetically):
 
 ```javascript
 {
+    allowCORS: false, //default: false. Allow CORS for this method
+    
     enabled: ['foobar'], //Enable condition. See 2.5 Enable/disable conditions
 
     description: "Some description goes here", //Description for the Docker
@@ -79,8 +81,7 @@ Resource object has the following structure (properties placed alphabetically):
     method: "POST", //default: GET. HTTP method required.
 
     noAuth: false, //default: false. If true, no authentication is needed for this resource
-
-
+    
 	/**
 	 * Obsolete method flag
 	 * If true, warning message is written to console each time the method is called
@@ -183,7 +184,7 @@ var settings = {
 }
 ```
 
-Missing settings are treated as once having **false** value
+Missing settings are treated as if they had **false** value
 
 
 ```
@@ -462,6 +463,11 @@ This extension is currently not supported.
 - [MariaDB](https://github.com/MaximTovstashev/brest-maria) MariaDB (abandoned, use MySQL instead!)
 
 ## Changes
+
+#### 0.2.2
+
+- Added CORS headers support
+- More refactoring towards ES2015 standards
 
 #### 0.2.1
 
