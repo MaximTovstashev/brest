@@ -137,7 +137,9 @@ the second parameter.
         api_url: {
           	prefix: 'api/',				// Prepend url with leading string.
           	unversioned: true			// Don't include API version into the URL (default false)
-        }
+        },
+        before_static_init: (express, app) => {}, //Function to be called before static route is setup
+        after_static_init: (express, app) => {}   //Function to be called after static route is setup
     }
 
 ```
@@ -408,6 +410,11 @@ Brest instance, once setup emits various events, that can be used to further ext
 	        });
 	});
   ```
+  
+  - **before_api_init**: Event is called before starting binding the paths
+  - **after_api_init**: Event is called after successfully finishing binding the paths
+  
+  Please, note, that these events would be called for each `Brest.bindPath` call. 
 
   - **closing**: Brest is shutting down, but it still has some matters to attend. If you need to catch the moment pass which
    you shouldn't do anything with Brest, you should catch this event.
@@ -467,6 +474,10 @@ This extension is currently not supported.
 - [MariaDB](https://github.com/MaximTovstashev/brest-maria) MariaDB (abandoned, use MySQL instead!)
 
 ## Changes
+
+#### 0.2.7
+
+- Added more initialization events
 
 #### 0.2.6
 
