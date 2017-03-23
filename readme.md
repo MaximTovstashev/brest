@@ -464,9 +464,13 @@ This extension is currently not supported.
 
 ## Changes
 
+#### 0.2.4
+
+- Fixed 'toobusy' bug and updated default settings
+
 #### 0.2.3
 
-- CORS now utilizes express.js middleware and supports pre-flight requests. 
+- CORS now utilizes express.js middleware and supports pre-flight requests.
 
 #### 0.2.2
 
