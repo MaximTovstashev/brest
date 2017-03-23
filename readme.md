@@ -468,6 +468,10 @@ This extension is currently not supported.
 
 ## Changes
 
+#### 0.2.6
+
+- Fixed API prefix
+
 #### 0.2.5
 
 - ESLint introduced
