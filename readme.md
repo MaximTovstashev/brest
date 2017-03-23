@@ -133,6 +133,10 @@ the second parameter.
         },
         static: {
             public: "public"            // Public folder path
+        },
+        api_url: {
+          	prefix: 'api/',				// Prepend url with leading string.
+          	unversioned: true			// Don't include API version into the URL (default false)
         }
     }
 
@@ -463,6 +467,11 @@ This extension is currently not supported.
 - [MariaDB](https://github.com/MaximTovstashev/brest-maria) MariaDB (abandoned, use MySQL instead!)
 
 ## Changes
+
+#### 0.2.5
+
+- ESLint introduced
+- API URL options added
 
 #### 0.2.4
 
