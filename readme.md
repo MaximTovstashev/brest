@@ -480,6 +480,10 @@ This extension is currently not supported (and has nothing to do with Docker con
 
 ## Changes
 
+#### 0.3.1
+
+- Fixed bug with undefined "handlerPromise"
+
 #### 0.3.0
 
 - Fixed bug with unauthorized "me" property use
