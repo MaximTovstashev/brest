@@ -1,51 +1,50 @@
 {
-    "author": {
-        "name": "Max Kitsch",
-        "email": "max.kitsch@gmail.com"
-    },
-    "name": "brest",
-    "description": "REST framework over express.js",
-    "version": "0.2.7",
-    "repository": {
-        "type" : "git",
-        "url": "https://github.com/MaximTovstashev/brest.git"
-    },
-    "main": "index.js",
-    "dependencies": {
-        "async": "*",
-        "body-parser": "*",
-        "colors": "*",
-        "cors": "^2.8.1",
-        "express": "4.x",
-        "lodash": "*",
-        "morgan": "*",
-        "multer": "*",
-        "toobusy-js": "*"
-
-    },
-    "devDependencies": {
-        "async": "*",
-        "body-parser": "*",
-        "colors": "*",
-        "cors": "*",
-        "express": "*",
-        "lodash": "*",
-        "morgan": "*",
-        "multer": "*",
-        "toobusy-js": "*"
-    },
-    "keywords": [
-        "api",
-        "app",
-        "express",
-        "rest",
-        "restful",
-        "router",
-        "web"
-    ],
+  "author": {
+    "name": "Max Kitsch",
+    "email": "max.kitsch@gmail.com"
+  },
+  "name": "brest",
+  "description": "REST framework over express.js",
+  "version": "0.3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MaximTovstashev/brest.git"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "async": "*",
+    "body-parser": "*",
+    "colors": "*",
+    "cors": "^2.8.1",
+    "express": "4.x",
+    "lodash": "*",
+    "morgan": "*",
+    "multer": "*",
+    "toobusy-js": "*"
+  },
+  "devDependencies": {
+    "async": "*",
+    "body-parser": "*",
+    "colors": "*",
+    "cors": "*",
+    "express": "*",
+    "lodash": "*",
+    "morgan": "*",
+    "multer": "*",
+    "toobusy-js": "*"
+  },
+  "keywords": [
+    "api",
+    "app",
+    "express",
+    "rest",
+    "restful",
+    "router",
+    "web"
+  ],
   "license": "MIT",
   "optionalDependencies": {},
-    "engines": {
-        "node": "*"
-    }
+  "engines": {
+    "node": "*"
+  }
 }

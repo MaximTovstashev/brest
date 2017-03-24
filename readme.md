@@ -118,6 +118,11 @@ Add to the response object for the handler callback
 
 **redirect** {String} Redirect user to given URL
 
+#### 2.3.2 Using handlers with Promises
+
+Instead of using callback, you can return Promise from your handler. If you have to use options in this case, include
+them into result object with `$options` key. `$options` will be removed from resulting JSON sent to user.
+
 ### 2.4 Settings
 
 Certain default settings may be overridden by providing user settings. Settings object is passed to the brest() as
@@ -470,10 +475,16 @@ express-limiter library
 ### 5.2 Obsolete
 
 - [Docker](https://github.com/MaximTovstashev/brest-docker) Extension automatically builds documentation for the Brest API function.
-This extension is currently not supported.
+This extension is currently not supported (and has nothing to do with Docker container management)
 - [MariaDB](https://github.com/MaximTovstashev/brest-maria) MariaDB (abandoned, use MySQL instead!)
 
 ## Changes
+
+#### 0.3.0
+
+- Fixed bug with unauthorized "me" property use
+- Fixed typo in undefined handler error message
+- Handler can now return promise instead of using callback
 
 #### 0.2.7
 
