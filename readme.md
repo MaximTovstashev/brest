@@ -31,8 +31,8 @@ In your application file:
 
 ```javascript
     // Require brest library
-    var Brest = require("brest");
-    var brest = new Brest(require('%path_to_settings%'));
+    const Brest = require('brest');
+    const brest = new Brest(require('%path_to_settings%'));
 ```
 
 #### 2.2 Brest folders
@@ -46,9 +46,9 @@ By default, Brest uses the following folders:
 API scripts are expected to export object files with the following structure:
 
 ```javascript
-{
+module.exports = {
     version: 1,
-    description: "Resource description" //Description for the Docker
+    description: "Resource description", //Description for the possible documentation engines
     resources: [
         //Here come the resource objects
     ]
@@ -61,6 +61,7 @@ objects description is used:
 Resource object has the following structure (properties placed alphabetically):
 
 ```javascript
+const resource =  
 {
     allowCORS: false, //default: false. Allow CORS for this method
     
@@ -68,7 +69,7 @@ Resource object has the following structure (properties placed alphabetically):
 
     description: "Some description goes here", //Description for the Docker
 
-    disabled: {environment: 'dev'} //Disable condition. See 2.4 Enable/disable conditions
+    disabled: {environment: 'dev'}, //Disable condition. See 2.4 Enable/disable conditions
 
     /**
      * Handler function: receives Express JS object and a callback function.
@@ -88,10 +89,14 @@ Resource object has the following structure (properties placed alphabetically):
      * Optionally can be a string with proposed new uri
      */
     obsolete: true|"new/uri",
+    
+    reject: ['field1', 'field2'],	  //Unconditionally remove fields from response
 
     screen: {noAuth: ['some_field']}, //Remove fields from response. Currently for noAuth only
 
     stub: false, //default: false. If true, resource returns "Not implemented yet" message.
+
+	upload: {}, //Multer settings object (see 3.3 for details)
 
     uri: ":fooId", //additional params, if any
 
@@ -129,7 +134,7 @@ Certain default settings may be overridden by providing user settings. Settings 
 the second parameter.
 
 ```javascript
-    var settings = {
+    const settings = {
         application: "%app_name%",      // Application name
         environment: "dev",             // Environmen type
         version: 1,                     // API default version
@@ -186,10 +191,10 @@ enabled: 'property_pingable.foobar';
 will check brest settings object for
 
 ```javascript
-var settings = {
+const settings = {
    //...
    property_pingable: {
-       foobar: true;
+       foobar: true
    }
    //...
 }
@@ -240,10 +245,8 @@ with "GET, POST"
 Request parameters can be passed both as a part of the path and the query string. Path parameters are described in
 "uri" property of resource description object:
 
-```javascript
-    //...
-        uri: "/floor/:floorId/room/:roomId"
-    //...
+```
+	uri: '/floor/:floorId/room/:roomId'
 ```
 
 Here *:floorId* and *:roomId* are path parameters and they would be accessible in req.params object as req.params.floorId
@@ -252,7 +255,7 @@ and req.params.roomId respectively.
 #### 3.2.2 Filtering
 Query strings are supposed to be described in *filters* property:
 
-```javascript
+```
     {
         method: GET.
         description: "Get car list",
@@ -274,33 +277,34 @@ user data replacement:
 ```javascript
 //  api/persons.js
 //...
-        {
-            method: "GET",
-            uri: "list",
-            description: "Returns users list",
-            filters: {
-                subscribed_to: {
-                    description: "Select user, subscribed to given user",
-                    replaceMe: 'id'
-                },
-                subscribed_by: {
-                    description: "Select user, subscribed by given user",
-                    replaceMe: 'id'
-                },
-                name: "Get users with names identical or close to given name"
-            },
-            handler: function(req,callback){
-                userCtrl.list(req.filters, callback);
-            }
-        }
+const resource = 
+	{
+		method: "GET",
+		uri: "list",
+		description: "Returns users list",
+		filters: {
+			subscribed_to: {
+				description: "Select user, subscribed to given user",
+				replaceMe: 'id'
+			},
+			subscribed_by: {
+				description: "Select user, subscribed by given user",
+				replaceMe: 'id'
+			},
+			name: "Get users with names identical or close to given name"
+		},
+		handler: function(req,callback){
+			userCtrl.list(req.filters, callback);
+		}
+	}
 //...
 ```
 
-In this case, if /v1/api/user?subscribed\_to=me is called, req.filters.subscribed\_to with be equal to req.user.id.
-If user in not authenticated or req.user doesn't contain ['id'] property, 403 error would be returned by server.
+In this case, if `/v1/api/user?subscribed\_to=me` is called, `req.filters.subscribed\_to` with be equal to `req.user.id`.
+If user in not authenticated or req.user doesn't contain `['id']` property, `403` error would be returned by server.
 
 By default 'me' and 'mine' are replaced with current user id. It is possible to add more replacements by 'replaceMe'
-setting. (e.g. settings.replaceMe = ['own', 'private']).
+setting. (e.g. `settings.replaceMe = ['own', 'private']`).
 
 #### 3.2.4 Filter transformations
 
@@ -322,30 +326,31 @@ Please, note, that transform filters are always applied before value limit filte
 
 ```javascript
 //...
-        {
-            method: "GET",
-            uri: "list",
-            description: "Returns users list",
-            filters: {
-                username: {
-                    description: "Filter by username",
-                    toLowerCase: true
-                },
-                city_code: {
-                    description: "Filter by city code",
-                    toUpperCase: true
-                },
-                secret_nickname: {
-					description: "Filter by secret nick name",
-					transform: function(value) {
-						return decypherSecretNickname(value);
-					}
-                }
-            },
-            handler: function(req,callback){
-                userCtrl.list(req.filters, callback);
-            }
-        }
+const resource =
+	{
+		method: "GET",
+		uri: "list",
+		description: "Returns users list",
+		filters: {
+			username: {
+				description: "Filter by username",
+				toLowerCase: true
+			},
+			city_code: {
+				description: "Filter by city code",
+				toUpperCase: true
+			},
+			secret_nickname: {
+				description: "Filter by secret nick name",
+				transform: function(value) {
+					return decypherSecretNickname(value);
+				}
+			}
+		},
+		handler: function(req,callback){
+			userCtrl.list(req.filters, callback);
+		}
+	}
 //...
 ```
 
@@ -355,7 +360,7 @@ Some of the Brest plugins may automatically bind filters to the requests in one 
 If you want to redefine the name of such filter, but you don't have an access to the responsible plugin or
 renaming on plugin side is impossible, you can use "filterAlias" API property
 
-```javascript
+```
 	{
 		filterAlias: {"bar": "long_and_ugly_autogenerated_filter_foo"}
 	}
@@ -366,7 +371,7 @@ the autogenerated filter named "long_and_ugly_autogenerated_filter_foo".
 
 Same can be achieved in a different manner:
 
-```javascript
+```
 	{
 		filters: {"long_and_ugly_autogenerated_filter_foo": {"alias": "bar"}}
 	}
@@ -374,7 +379,65 @@ Same can be achieved in a different manner:
 
 Mind that latter usage may not be usable depending on how and at which point the filters are autogenerated
 
-### 3.3 Logging requests
+
+### 3.3 Uploading files
+
+Brest uses [multer](https://github.com/expressjs/multer) middleware to accept multipart requests, which are primary
+used for uploading files.
+
+In order to make API endpoint accept files, use `upload` field in resource description. The basic usage requires only
+`dest` parameter, defining the upload destination:
+
+```javascript
+const resource = 
+{
+	//...
+	  upload: {
+	    	dest: 'uploads/'
+	  }
+}
+```
+
+You can use `fieldname` or `fieldnames` parameter as described in [multer](https://github.com/expressjs/multer) documentation.
+
+There's also a shortcut for renaming a single uploaded file:
+
+```javascript
+const resource = 
+{
+	//...
+	  upload: {
+		destination: function (req, file, cb) {
+			cb(null, getUploadDestination(file));
+		},
+		filename: function (req, file, cb) {
+			cb(null, getNewFileName(file));
+		}
+	  }
+}
+```
+
+Which is basically the same as using `multer.diskStorage` with the same options.
+
+You can get full control over your setup by using function instead of object. The function should accept multer module
+as a single parameter and return a set up middleware:
+
+```javascript
+const resource = 
+{
+  //...
+  upload: {
+    function(multer) {
+      return multer({
+      	dest: 'upload/'
+      });
+    }
+  }
+}
+```
+
+
+### 3.4 Logging requests
 
 Brest uses [mogran](https://github.com/expressjs/morgan) library to log requests. Starting from v0.1.10 it is
 possible to adjust logging as follows:
@@ -394,14 +457,14 @@ Brest instance, once setup emits various events, that can be used to further ext
  proceed with extensions initializations once this event fires:
 
  ```javascript
-         var brest = new Brest(settings);
+         const brest = new Brest(settings);
 
          brest.on('ready', function() {
          	            brest.use(
                             [   BrestValidate,
                                 BrestJaySchema,
                                 BrestPassport]);
-         }
+         });
  ```
 
  - **extensionsLoaded**: all extensions passed to brest.use have been initialized. At this point API path is to be bound.
@@ -428,7 +491,7 @@ Brest instance, once setup emits various events, that can be used to further ext
   can do it from here.
 
   - **counter**: Some counter has reached the predefined point. The counters can be set up in Brest settings as follows:
-  ```javascript
+  ```
   {
      emitCounterEventOn: {
         in: [100, 1000, 1701], // Emit counter event every 100, 1000 and 1701 incoming request
@@ -479,6 +542,13 @@ This extension is currently not supported (and has nothing to do with Docker con
 - [MariaDB](https://github.com/MaximTovstashev/brest-maria) MariaDB (abandoned, use MySQL instead!)
 
 ## Changes
+
+#### 0.3.2
+
+- Fixed bug with favicon description
+- Fixed bug with `reject` directive
+- Updated documentation
+- Updated `package.json` dependencies versioning
 
 #### 0.3.1
 
