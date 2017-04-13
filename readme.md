@@ -543,6 +543,9 @@ This extension is currently not supported (and has nothing to do with Docker con
 
 ## Changes
 
+#### 0.3.3
+- Fixed bug with bindPath not calling callback in certain cases
+
 #### 0.3.2
 
 - Fixed bug with favicon description
