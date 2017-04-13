@@ -3,9 +3,9 @@
     "name": "Max Kitsch",
     "email": "max.kitsch@gmail.com"
   },
-  "name": "brest",
+  "name": "Brest",
   "description": "REST framework over express.js",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/MaximTovstashev/brest.git"
@@ -17,6 +17,7 @@
     "colors": "^1.1.2",
     "cors": "^2.8.1",
     "express": "^4.15.2",
+    "intel": "^1.1.2",
     "lodash": "^4.17.4",
     "morgan": "^1.8.1",
     "multer": "^1.3.0",
@@ -34,5 +35,13 @@
   "license": "MIT",
   "engines": {
     "node": ">=6.0.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "mocha": "^3.2.0"
+  },
+  "scripts": {
+    "test": "mocha"
   }
 }

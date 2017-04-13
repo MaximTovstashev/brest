@@ -1,0 +1,1 @@
+module.exports.basic = {foo: 'bar', bar: 'baz'};

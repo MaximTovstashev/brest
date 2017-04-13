@@ -1,28 +1,16 @@
 # Brest
 
-## About
-
-Brest is a simple REST API library over [express.js](http://expressjs.com/).
+Brest is a simple REST API library over [express.js](http://expressjs.com/). 
 
 ## How do I use it?
 
 ### 1. Install from package manager
 
-If your project uses [package.json](https://npmjs.org/doc/json.html), simply include
+In project route
 
-    "dependencies": {
-        ...
-        "brest": "*",
-        ...
-    }
+    $ npm install brest --save
 
-and then in the shell, in project root folder execute:
-
-    $ npm install
-
-Otherwise, you can install brest globally with npm and have it available from anywhere on your machine:
-
-    $ npm install -g brest
+You don't have to install `express.js` separately. It is included into `Brest` dependencies.
 
 ### 2 Setup
 #### 2.1 Application file
@@ -37,68 +25,87 @@ In your application file:
 
 #### 2.2 Brest folders
 
-By default, Brest uses the following folders:
+By default, Brest uses `./api/` path for the `Resource` files. Different path for the `Resource` files can be provided in settings `apiPath` parameter, or
+by calling 
 
-* ./api — for the api scripts
+```javascript
+brest.bindPath([API_PATH, ADDITIONAL_API_PATH, /*...*/]);
+```
 
-#### 2.3 API script file structure
+For each path provided, `Brest` will go through all `.js` files in the folder, attempting to aquire `Resource` descriptions.
 
-API scripts are expected to export object files with the following structure:
+#### 2.3 Registering paths
+
+The API URL made with `Brest` can be separated into the following parts:
+ 
+**`[METHOD]`** `[Host] <Prefix> <Version> [Resource] {Endpoint}`
+ 
+- **`[METHOD]`** is HTTP Endpoint, like **`GET`** or **`POST`**. You're expected to use **`GET`** for retrieving resources, **`POST`** for creating new resources,
+**`PUT`** for updating existing resources and **`DELETE`** for deleting them, but that's not a strict rule. 
+You can limit to **`GET`** and **`POST`** or to any other set of HTTP verbs of your choice
+- `[Host]`. It is your server host. Like `example.com` or `127.0.0.1:8080`
+- `<Prefix>`. Arbitrary string to precede the rest of your URI. It is empty by default an can be assigned through `api_url.prefix` setting
+- `<Version>`. API version. By default it is `/v1/`. It is set through `version` field in `Resource` file description and can be switched off via `api_url.unversioned` setting.
+- `[Resource]`. The resource your API exposes access to. Like `user` or `package`. For the `Resource` part of the URI the `Resource` file name is used.
+
+API resource are expected to export object files with the following structure:
 
 ```javascript
 module.exports = {
     version: 1,
     description: "Resource description", //Description for the possible documentation engines
-    resources: [
-        //Here come the resource objects
+    endpoints: [
+        //List of the endpoint objects
     ]
 }
 ```
 
-Here, the version property and the filename define the beginning of the methods' URI. For instance, if API object from ./api/persons.js has property version: 1, the URI will start with /v1/user. After that, the resource
+Here, the version property and the filename define the beginning of the endpoints' URI. For instance, if API object from ./api/persons.js has property version: 1, the URI will start with /v1/user. After that, the resource
 objects description is used:
 
-Resource object has the following structure (properties placed alphabetically):
+Endpoint object has the following structure (properties placed alphabetically):
 
 ```javascript
-const resource =  
+const endpoint =  
 {
-    allowCORS: false, //default: false. Allow CORS for this method
-    
-    enabled: ['foobar'], //Enable condition. See 2.5 Enable/disable conditions
+	allowCORS: false, //default: false. Allow CORS for this endpoint
 
-    description: "Some description goes here", //Description for the Docker
-
-    disabled: {environment: 'dev'}, //Disable condition. See 2.4 Enable/disable conditions
-
-    /**
-     * Handler function: receives Express JS object and a callback function.
-     * If no handler provided, blank handler will return error
-     */
-    handler: function(req, callback) {
-        callback(err, result, options);
-    },
-
-    method: "POST", //default: GET. HTTP method required.
-
-    noAuth: false, //default: false. If true, no authentication is needed for this resource
+	description: "Some description goes here", //Description for the Docker
+	
+	disabled: {environment: 'dev'}, //Disable condition. See 2.5 Enable/disable conditions
+	
+	enabled: ['foobar'], //Enable condition. See 2.5 Enable/disable conditions
+	
+	/**
+	 * Handler function: receives Express JS object and a callback function.
+	 * If no handler provided, blank handler will return error
+	 */
+	handler: function(req, callback) {
+		callback(err, result, options);
+	},
+	
+	method: "POST", //default: GET. HTTP method required.
+	
+	middle: [], //Custom middleware for the endpoint
+	
+	noAuth: false, //default: false. If true, no authentication is needed for this resource
     
 	/**
-	 * Obsolete method flag
-	 * If true, warning message is written to console each time the method is called
-     * Optionally can be a string with proposed new uri
-     */
-    obsolete: true|"new/uri",
-    
-    reject: ['field1', 'field2'],	  //Unconditionally remove fields from response
-
-    screen: {noAuth: ['some_field']}, //Remove fields from response. Currently for noAuth only
-
-    stub: false, //default: false. If true, resource returns "Not implemented yet" message.
+	 * Obsolete endpoint flag
+	 * If true, warning message is written to console each time the endpoint is called
+	 * Optionally can be a string with proposed new uri
+	 */
+	obsolete: true|"new/uri",
+	
+	reject: ['field1', 'field2'],	  //Unconditionally remove fields from response
+	
+	screen: {noAuth: ['some_field']}, //Remove fields from response. Currently for noAuth only
+	
+	stub: false, //default: false. If true, resource returns "Not implemented yet" message.
 
 	upload: {}, //Multer settings object (see 3.3 for details)
 
-    uri: ":fooId", //additional params, if any
+	uri: ":fooId", //additional params, if any
 
 }
 ```
@@ -236,9 +243,8 @@ The following methods are being supported by Brest:
 GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH, TRACE
 ```
 
-If the request is send to existing URI with undefined method (say, you have GET /v1/kittens and POST /v1/kittens, but
-you try to DELETE /v1/kittens) Brest will respond with 405 error code and response header will contain Allow field
-with "GET, POST"
+If the request is send to existing URI with undefined method (say, you have **`GET`**`/v1/kittens` and **`POST`**`/v1/kittens`, but
+you try to **`DELETE`**`/v1/kittens`) Brest will respond with `405` error code and response header will contain `Allow: GET, POST`.
 
 ### 3.2 Request URL parameters
 #### 3.2.1 Basic handling
@@ -249,8 +255,8 @@ Request parameters can be passed both as a part of the path and the query string
 	uri: '/floor/:floorId/room/:roomId'
 ```
 
-Here *:floorId* and *:roomId* are path parameters and they would be accessible in req.params object as req.params.floorId
-and req.params.roomId respectively.
+Here `:floorId` and `:roomId` are path parameters and they would be accessible in `req.params` object as `req.params.floorId`
+and `req.params.roomId` respectively.
 
 #### 3.2.2 Filtering
 Query strings are supposed to be described in *filters* property:
@@ -314,10 +320,9 @@ It is possible to automatically transform filter values. The following transform
 This transformation is made **before** any other. Unless stated otherwise, transformation filters will be applied to each array element separately.
 - *toLowerCase*: transform filter value to lower case
 - *toUpperCase*: transform filter value to upper case
-- *toFinite*: transform filter value to finite number
 - *toInteger*: transform filter value to integer
 - *toNumber*: transform filter value to number
-- *toBoolean*: transform filter value to boolean. Note, that strings *"false"* and *"0"* are cast to boolean **false**
+- *toBoolean*: transform filter value to boolean. Note, that strings *`"false"`* and *`"0"`* are cast to boolean **false**
 - *min*, *max*: limit numeric filter value. Consider using transformation to number with this parameters.
 - *clamp*: takes array of [min, max], ensures value stays between these numbers. Pre-cast to number is recommended as well. 
 - *transform*: provide custom transformation synchronous function
@@ -326,7 +331,7 @@ Please, note, that transform filters are always applied before value limit filte
 
 ```javascript
 //...
-const resource =
+const endpoint =
 	{
 		method: "GET",
 		uri: "list",
@@ -543,6 +548,17 @@ This extension is currently not supported (and has nothing to do with Docker con
 
 ## Changes
 
+#### 0.4.0 ["Chapaev"](https://en.wikipedia.org/wiki/Vasily_Chapayev)
+- Method class is now called Endpoint in order to prevent confusion with HTTP methods
+- [Intel](https://github.com/seanmonstar/intel) module is now responsible for logging
+- Working examples
+- Test coverage
+- Fixed Clamp() transformation name
+- Fixed array transformation
+- Fixed typecast and string transformations begin applied with own parameter set to "false"
+- Fixed issue with apiPath setting not working correctly
+- Fixed issue with bindPath not calling callback in case of success binding
+
 #### 0.3.2
 
 - Fixed bug with favicon description
@@ -653,7 +669,7 @@ to existing ones. Please, refer to lodash tutorial for details.
 - Path description fields are not limited to the predefined list, nor the required fields are checked. However,
 the default HTTP method is GET and if handler is skipped, empty handler which returns error is used instead.
 - It is now possible to add new replacement keys to replaceMe (settings: replaceMe)
-- getBrest() method in available in Method and Path objects. Usable in plugins.
+- getBrest() method in available in Endpoint and Path objects. Usable in plugins.
 - TooBusy now returns 429 code instead of 503
 - Fixed issue with incorrect settings format crashing the application
 - Fixed "Authentication failed" error message
