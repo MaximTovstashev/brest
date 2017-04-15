@@ -6,7 +6,7 @@ const generic = require('../../generic'),
     chai = generic.chai,
     expect = chai.expect;
 
-it('Should have proper designation', (done)=>{
+it('Should have proper designation', (done) => {
     expect(toLowerCase.name).to.be.equal('toLowerCase');
     done();
 });
@@ -14,7 +14,7 @@ it('Should have proper designation', (done)=>{
 it('Should be appliable when transformation is described as boolean "true"', (done) => {
     expect(toLowerCase.isAppliable(undefined)).to.be.false;
     expect(toLowerCase.isAppliable([1])).to.be.false;
-    expect(toLowerCase.isAppliable(([1,2,3]))).to.be.false;
+    expect(toLowerCase.isAppliable(([1, 2, 3]))).to.be.false;
     expect(toLowerCase.isAppliable({foo: 'bar'})).to.be.false;
     expect(toLowerCase.isAppliable(42)).to.be.false;
     expect(toLowerCase.isAppliable('true')).to.be.false;
@@ -35,7 +35,7 @@ it('Should map array values', (done) => {
 });
 
 it('Should be applied correctly', (done) => {
-    expect(toLowerCase.apply({toLowerCase: true},'Beer and Vodka')).to.be.eql('beer and vodka');
+    expect(toLowerCase.apply({toLowerCase: true}, 'Beer and Vodka')).to.be.eql('beer and vodka');
     expect(toLowerCase.apply({toLowerCase: false}, 'Beer and Vodka')).to.be.eql('Beer and Vodka');
     expect(toLowerCase.apply({toLowerCase: 'true'}, 'Beer and Vodka')).to.be.eql('Beer and Vodka');
     expect(toLowerCase.apply({toLowerCase: true}, 'LoTsOfFuN')).to.be.eql('lotsoffun');

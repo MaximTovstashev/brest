@@ -11,12 +11,14 @@ before((done) => {
     generic.initSpyGenerator(brest);
 });
 
-// describe('Basic API requests', () => require('./basic'));
-// describe('Basic API requests with promises', () => require('./promise'));
+describe('Basic API requests', () => require('./basic'));
+describe('Basic API requests with promises', () => require('./promise'));
 describe('Returning error messages', () => require('./errors'));
+describe('Filters', () => require('./filters'));
+describe('Rejects', () => require('./rejects'));
 
 after((done) => {
-    brest.close(()=>{
+    brest.close(() => {
         done();
     });
 });

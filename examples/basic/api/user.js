@@ -1,6 +1,6 @@
 module.exports = {
     version: 1,
-    resources: [
+    endpoints: [
 
         {
             method: 'GET',

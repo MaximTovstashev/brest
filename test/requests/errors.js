@@ -61,3 +61,17 @@ it('Should return specific code when defined in promise reject', (done) => {
         done();
     });
 });
+
+it('Should return 405 (Method not supported) code requested for unsupported method', (done) => {
+    request
+    .put('/')
+    .end((err, res) => {
+      //noinspection BadExpressionStatementJS
+        expect(res).to.be.OK;
+      //noinspection BadExpressionStatementJS
+        expect(res.body).to.be.empty;
+        expect(res).to.have.status(405);
+        expect(res).to.have.header('Allow', 'GET,POST');
+        done();
+    });
+});

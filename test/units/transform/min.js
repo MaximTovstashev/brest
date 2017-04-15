@@ -6,7 +6,7 @@ const generic = require('../../generic'),
     chai = generic.chai,
     expect = chai.expect;
 
-it('Should have proper designation', (done)=>{
+it('Should have proper designation', (done) => {
     expect(min.name).to.be.equal('min');
     done();
 });
@@ -15,8 +15,8 @@ it('Should be appliable when transformation is described as a number', (done) =>
     expect(min.isAppliable(undefined)).to.be.false;
     expect(min.isAppliable('Foo')).to.be.false;
     expect(min.isAppliable([1])).to.be.false;
-    expect(min.isAppliable(([1,2,3]))).to.be.false;
-    expect(min.isAppliable([1,10])).to.be.false;
+    expect(min.isAppliable(([1, 2, 3]))).to.be.false;
+    expect(min.isAppliable([1, 10])).to.be.false;
     expect(min.isAppliable(42)).to.be.true;
     done();
 });

@@ -6,7 +6,7 @@ const generic = require('../../generic'),
     chai = generic.chai,
     expect = chai.expect;
 
-it('Should have proper designation', (done)=>{
+it('Should have proper designation', (done) => {
     expect(clamp.name).to.be.equal('clamp');
     done();
 });
@@ -16,8 +16,8 @@ it('Should be appliable when transformation is described as an array with two pa
     expect(clamp.isAppliable(42)).to.be.false;
     expect(clamp.isAppliable('Foo')).to.be.false;
     expect(clamp.isAppliable([1])).to.be.false;
-    expect(clamp.isAppliable(([1,2,3]))).to.be.false;
-    expect(clamp.isAppliable([1,10])).to.be.true;
+    expect(clamp.isAppliable(([1, 2, 3]))).to.be.false;
+    expect(clamp.isAppliable([1, 10])).to.be.true;
     done();
 });
 

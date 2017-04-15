@@ -1,4 +1,6 @@
+const path = require('path');
+
 module.exports = {
     application: 'Example',
-    apiPath: 'api'
+    apiPath: path.join(__dirname, 'api'),
 };

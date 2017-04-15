@@ -9,20 +9,22 @@ const generic = require('../../generic'),
 const customTransformFunction1 = value => value * 2;
 const customTransformFunction2 = value => value + 'b';
 
-it('Should have proper designation', (done)=>{
+it('Should have proper designation', (done) => {
     expect(custom.name).to.be.equal('transform');
     done();
 });
 
-it('Should be appliable when transformation is described as a function', (done)=>{
+it('Should be appliable when transformation is described as a function', (done) => {
     expect(custom.isAppliable(null)).to.be.false;
     expect(custom.isAppliable(true)).to.be.false;
     expect(custom.isAppliable(42)).to.be.false;
     expect(custom.isAppliable('Beer')).to.be.false;
     expect(custom.isAppliable([1, 2, 3])).to.be.false;
     expect(custom.isAppliable({foo: 'bar'})).to.be.false;
-    expect(custom.isAppliable(function(){})).to.be.true;
-    expect(custom.isAppliable(() => {})).to.be.true;
+    expect(custom.isAppliable(function () {
+    })).to.be.true;
+    expect(custom.isAppliable(() => {
+    })).to.be.true;
     done();
 });
 

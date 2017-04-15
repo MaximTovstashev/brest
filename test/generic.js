@@ -1,7 +1,7 @@
-const mocha     = require('mocha');
-const chai      = require('chai');
-const chaiHttp  = require('chai-http');
-const chaiSpies  = require('chai-spies');
+const mocha = require('mocha');
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+const chaiSpies = require('chai-spies');
 
 chai.use(chaiHttp);
 chai.use(chaiSpies);

@@ -9,6 +9,14 @@ module.exports = {
         },
 
         {
+            method: 'POST',
+            description: 'Used for creating extra endpoint for verb testing',
+            handler(req, callback) {
+                callback({error: 'Test error'});
+            }
+        },
+
+        {
             method: 'GET',
             uri: 'promise',
             description: 'Get basic error from promise',

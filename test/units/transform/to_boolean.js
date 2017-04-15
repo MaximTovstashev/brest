@@ -6,7 +6,7 @@ const generic = require('../../generic'),
     chai = generic.chai,
     expect = chai.expect;
 
-it('Should have proper designation', (done)=>{
+it('Should have proper designation', (done) => {
     expect(toBoolean.name).to.be.equal('toBoolean');
     done();
 });
@@ -14,7 +14,7 @@ it('Should have proper designation', (done)=>{
 it('Should be appliable when transformation is described as boolean "true"', (done) => {
     expect(toBoolean.isAppliable(undefined)).to.be.false;
     expect(toBoolean.isAppliable([1])).to.be.false;
-    expect(toBoolean.isAppliable(([1,2,3]))).to.be.false;
+    expect(toBoolean.isAppliable(([1, 2, 3]))).to.be.false;
     expect(toBoolean.isAppliable({foo: 'bar'})).to.be.false;
     expect(toBoolean.isAppliable(42)).to.be.false;
     expect(toBoolean.isAppliable('true')).to.be.false;

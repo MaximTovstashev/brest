@@ -1,10 +1,73 @@
-# Brest
+![Brest](./assets/logo.png)
+> Better REST over express.js
+#>
 
-Brest is a simple REST API library over [express.js](http://expressjs.com/). 
+Brest is a (relatively) simple REST API library over [express.js](http://expressjs.com/). 
 
-## How do I use it?
+##Table of contents
+<style>
+	ul.toc, ul.toc ul {
+		list-style-type: none; 
+		font-size: 14pt
+	}
+</style>
+<ul class="toc">
+	<li><a href='#migration'>Migration</a></li>
+	<li><a href='#how-do-i-use'>Guide</a></li>
+	<li><ul>
+			<li><a href="#ch1">1. Install from package manager</a></li>
+			<li><a href="#ch2">2. Setup</a></li>
+			<li><ul>
+				<li><a href="#ch2.1">2.1 Application file</a></li>
+				<li><a href="#ch2.2">2.2 Brest working directories</a></li>
+				<li><a href="#ch2.3">2.3 Registering paths</a></li>
+				<li><ul>
+					<li><a href="#ch2.3.1">2.3.1 Possible response options</a></li>
+					<li><a href="#ch2.3.2">2.3.2 Using handlers with Promises</a></li>
+				</ul></li>
+				<li><a href="#ch2.4">2.4 Settings</a></li>
+				<li><a href="#ch2.5">2.5 Enable/disable conditions</a></li>
+				<li><ul>
+					<li><a href="#ch2.5.1">2.5.1 Conditions setup</a></li>
+				</ul></li>
+			</ul></li>
+			<li><a href="#ch3">3 Serving requests</a></li>
+			<li><ul>
+				<li><a href="#ch3.1">3.1 Supported methods</a></li>
+				<li><a href="#ch3.2">3.2 Request URL parameters</a></li>
+				<li><ul>
+					<li><a href="#ch3.2.1">3.2.1 Basic handling</a></li>
+					<li><a href="#ch3.2.2">3.2.2 Filtering</a></li>
+					<li><a href="#ch3.2.3">3.2.3 Complex filter descriptions</a></li>
+					<li><a href="#ch3.2.4">3.2.4 Filter transformations</a></li>
+					<li><a href="#ch3.2.5">3.2.5 Filter aliases</a></li>
+				</ul></li>
+				<li><a href="#ch3.3">3.3 Uploading files</a></li>				
+				<li><a href="#ch3.4">3.4 Logging requests</a></li>							
+			</ul></li>
+			<li><a href="#ch4">4 Events</a></li>
+			<li><a href="#ch5">5 Extensions</a></li>
+			<li><ul>
+				<li><a href="#ch5.1">5.1 Current</a></li>
+				<li><a href="#ch5.2">5.2 Obsolete</a></li>
+			</ul></li>
+		</ul></li>
+	<li><a href='#tests'>Tests</a></li>	
+	<li><a href='#changes'>Changes</a></li>	
+	<li><a href='#license'>License</a></li>	
+</ul>
 
-### 1. Install from package manager
+##<a name="migration"></a>Migration
+
+Brest v.0.4 is going to be the last minor version before 1.0 release. The aim of 0.4.x branch is to prepare for the 
+v1.0 release: with bugs fixed, proper tests and documentation covering all aspects of using Brest in production environment.
+ 
+The backwards compatibility will remain through all 0.4.x releases. The oblosete features will work, but with warnings.
+ Any feature that causes "deprecated" warnin will be dropped in Brest 1.0
+
+##<a name="how-do-i-use"></a>Guide
+
+###<a name="ch1"></a>1. Install from package manager
 
 In project route
 
@@ -12,8 +75,8 @@ In project route
 
 You don't have to install `express.js` separately. It is included into `Brest` dependencies.
 
-### 2 Setup
-#### 2.1 Application file
+###<a name="ch2"></a>2 Setup
+####<a name="ch2.1"></a>2.1 Application file
 
 In your application file:
 
@@ -23,7 +86,7 @@ In your application file:
     const brest = new Brest(require('%path_to_settings%'));
 ```
 
-#### 2.2 Brest folders
+####<a name="ch2.2"></a>2.2 Brest working directories
 
 By default, Brest uses `./api/` path for the `Resource` files. Different path for the `Resource` files can be provided in settings `apiPath` parameter, or
 by calling 
@@ -34,7 +97,7 @@ brest.bindPath([API_PATH, ADDITIONAL_API_PATH, /*...*/]);
 
 For each path provided, `Brest` will go through all `.js` files in the folder, attempting to aquire `Resource` descriptions.
 
-#### 2.3 Registering paths
+####<a name="ch2.3"></a>2.3 Registering paths
 
 The API URL made with `Brest` can be separated into the following parts:
  
@@ -110,7 +173,7 @@ const endpoint =
 }
 ```
 
-#### 2.3.1 Possible response options
+####<a name="ch2.3.1"></a>2.3.1 Possible response options
 
 Add to the response object for the handler callback
 
@@ -130,12 +193,12 @@ Add to the response object for the handler callback
 
 **redirect** {String} Redirect user to given URL
 
-#### 2.3.2 Using handlers with Promises
+####<a name="ch2.3.2"></a>2.3.2 Using handlers with Promises
 
 Instead of using callback, you can return Promise from your handler. If you have to use options in this case, include
 them into result object with `$options` key. `$options` will be removed from resulting JSON sent to user.
 
-### 2.4 Settings
+###<a name="ch2.4"></a>2.4 Settings
 
 Certain default settings may be overridden by providing user settings. Settings object is passed to the brest() as
 the second parameter.
@@ -161,7 +224,7 @@ the second parameter.
 
 ```
 
-### 2.5 Enable/disable conditions
+###<a name="ch2.5"></a>2.5 Enable/disable conditions
 
 Path objects can be enabled or disabled by certain settings conditions.
 
@@ -174,7 +237,7 @@ Path objects can be enabled or disabled by certain settings conditions.
 First enabled conditions are checked, and then disabled conditions are checked. Which means, if settings meet both
 conditions, the path will be disabled disregarding 'enabled' condition.
 
-#### 2.5.1 Conditions setup
+####<a name="ch2.5.1"></a>2.5.1 Conditions setup
 
 The following formats are possible (appliable for "disabled" as well):
 
@@ -233,9 +296,9 @@ Nested settings are described same as in previous options. I.e.
 ```
 
 
-## 3 Serving requests
+##<a name="ch3"></a>3 Serving requests
 
-### 3.1 Supported methods
+###<a name="ch3.1"></a>3.1 Supported methods
 
 The following methods are being supported by Brest:
 
@@ -246,8 +309,8 @@ GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH, TRACE
 If the request is send to existing URI with undefined method (say, you have **`GET`**`/v1/kittens` and **`POST`**`/v1/kittens`, but
 you try to **`DELETE`**`/v1/kittens`) Brest will respond with `405` error code and response header will contain `Allow: GET, POST`.
 
-### 3.2 Request URL parameters
-#### 3.2.1 Basic handling
+###<a name="ch3.2"></a>3.2 Request URL parameters
+####<a name="ch3.2.1"></a>3.2.1 Basic handling
 Request parameters can be passed both as a part of the path and the query string. Path parameters are described in
 "uri" property of resource description object:
 
@@ -258,7 +321,7 @@ Request parameters can be passed both as a part of the path and the query string
 Here `:floorId` and `:roomId` are path parameters and they would be accessible in `req.params` object as `req.params.floorId`
 and `req.params.roomId` respectively.
 
-#### 3.2.2 Filtering
+####<a name="ch3.2.2"></a>3.2.2 Filtering
 Query strings are supposed to be described in *filters* property:
 
 ```
@@ -276,7 +339,7 @@ Query strings are supposed to be described in *filters* property:
 
 Filter values are stored in req.filters property as key:value.
 
-#### 3.2.3 Complex filter descriptions
+####<a name="ch3.2.3"></a>3.2.3 Complex filter descriptions
 These properties description are used by documentation creation scripts to create detailed description of the resource. You can also use
 user data replacement:
 
@@ -312,7 +375,7 @@ If user in not authenticated or req.user doesn't contain `['id']` property, `403
 By default 'me' and 'mine' are replaced with current user id. It is possible to add more replacements by 'replaceMe'
 setting. (e.g. `settings.replaceMe = ['own', 'private']`).
 
-#### 3.2.4 Filter transformations
+####<a name="ch3.2.4"></a>3.2.4 Filter transformations
 
 It is possible to automatically transform filter values. The following transformations can be used:
 
@@ -359,7 +422,7 @@ const endpoint =
 //...
 ```
 
-#### 3.2.5 Filter aliases
+####<a name="ch3.2.5"></a>3.2.5 Filter aliases
 
 Some of the Brest plugins may automatically bind filters to the requests in one way or another.
 If you want to redefine the name of such filter, but you don't have an access to the responsible plugin or
@@ -385,7 +448,7 @@ Same can be achieved in a different manner:
 Mind that latter usage may not be usable depending on how and at which point the filters are autogenerated
 
 
-### 3.3 Uploading files
+###<a name="ch3.3"></a>3.3 Uploading files
 
 Brest uses [multer](https://github.com/expressjs/multer) middleware to accept multipart requests, which are primary
 used for uploading files.
@@ -442,7 +505,7 @@ const resource =
 ```
 
 
-### 3.4 Logging requests
+###<a name="ch3.4"></a>3.4 Logging requests
 
 Brest uses [mogran](https://github.com/expressjs/morgan) library to log requests. Starting from v0.1.10 it is
 possible to adjust logging as follows:
@@ -453,7 +516,7 @@ possible to adjust logging as follows:
 - morgan instance: use pre-initialized morgan instance.
 - object: {\<%format%>: {\<%settings%>}}. Load **morgan(\<%format%>, \<%settings%>)**
 
-## 4 Events
+##<a name="ch4"></a>4 Events
 
 Brest instance, once setup emits various events, that can be used to further extend it's functionality.
 
@@ -517,11 +580,11 @@ the number of concurrent requests and can be used to estimate current load.
 
 - **error**: Something wrong has happened. Event listener receives error object as a parameter.
 
-## 5 Extensions
+##<a name="ch5"></a>5 Extensions
 
-### 5.1 Current
+###<a name="ch5.1"></a>5.1 Current
 
-#### Authentication
+####Authentication
 
 [Passport](https://github.com/MaximTovstashev/brest-passport) Authenticating user with PassportJS
 
@@ -540,13 +603,22 @@ the number of concurrent requests and can be used to estimate current load.
 express-limiter library
 
 
-### 5.2 Obsolete
+###<a name="ch5.2"></a>5.2 Obsolete
 
 - [Docker](https://github.com/MaximTovstashev/brest-docker) Extension automatically builds documentation for the Brest API function.
 This extension is currently not supported (and has nothing to do with Docker container management)
 - [MariaDB](https://github.com/MaximTovstashev/brest-maria) MariaDB (abandoned, use MySQL instead!)
 
-## Changes
+##<a name="tests"></a>Tests
+
+
+To run the test suite, first install the dependencies, then run npm test:
+```bash
+$ npm install
+$ npm test
+```
+
+##<a name="changes"></a>Changes
 
 #### 0.4.0 ["Chapaev"](https://en.wikipedia.org/wiki/Vasily_Chapayev)
 - Method class is now called Endpoint in order to prevent confusion with HTTP methods
@@ -797,7 +869,7 @@ Fixed issue with URL parameters passed to method with no described filters.
 
 First working version.
 
-## MIT License
+##<a name="license"></a>MIT License
 
 Copyright © 2013 Maxim Tovstashev <max.kitsch@gmail.com>
 
