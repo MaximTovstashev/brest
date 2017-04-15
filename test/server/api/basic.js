@@ -30,7 +30,6 @@ module.exports = {
 
         {
             method: 'POST',
-            noAuth: true,
             handler: function (req, callback) {
                 callback(null, {created: req.body});
             }
