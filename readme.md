@@ -1,6 +1,5 @@
 ![Brest](./assets/logo.png)
-> Better REST over express.js
-#>
+# Better REST over express.js
 
 Brest is a (relatively) simple REST API library over [express.js](http://expressjs.com/). 
 
@@ -62,7 +61,7 @@ The backwards compatibility will remain through all 0.4.x releases. The oblosete
 
 ## <a name="how-do-i-use"></a>Guide
 
-###<a name="ch1"></a>1. Install from package manager
+### <a name="ch1"></a>1. Install from package manager
 
 In project route
 
@@ -70,8 +69,8 @@ In project route
 
 You don't have to install `express.js` separately. It is included into `Brest` dependencies.
 
-###<a name="ch2"></a>2 Setup
-####<a name="ch2.1"></a>2.1 Application file
+### <a name="ch2"></a>2 Setup
+#### <a name="ch2.1"></a>2.1 Application file
 
 In your application file:
 
@@ -81,7 +80,7 @@ In your application file:
     const brest = new Brest(require('%path_to_settings%'));
 ```
 
-####<a name="ch2.2"></a>2.2 Brest working directories
+#### <a name="ch2.2"></a>2.2 Brest working directories
 
 By default, Brest uses `./api/` path for the `Resource` files. Different path for the `Resource` files can be provided in settings `apiPath` parameter, or
 by calling 
@@ -92,7 +91,7 @@ brest.bindPath([API_PATH, ADDITIONAL_API_PATH, /*...*/]);
 
 For each path provided, `Brest` will go through all `.js` files in the folder, attempting to aquire `Resource` descriptions.
 
-####<a name="ch2.3"></a>2.3 Registering paths
+#### <a name="ch2.3"></a>2.3 Registering paths
 
 The API URL made with `Brest` can be separated into the following parts:
  
@@ -168,7 +167,7 @@ const endpoint =
 }
 ```
 
-####<a name="ch2.3.1"></a>2.3.1 Possible response options
+#### <a name="ch2.3.1"></a>2.3.1 Possible response options
 
 Add to the response object for the handler callback
 
@@ -193,7 +192,7 @@ Add to the response object for the handler callback
 Instead of using callback, you can return Promise from your handler. If you have to use options in this case, include
 them into result object with `$options` key. `$options` will be removed from resulting JSON sent to user.
 
-###<a name="ch2.4"></a>2.4 Settings
+### <a name="ch2.4"></a>2.4 Settings
 
 Certain default settings may be overridden by providing user settings. Settings object is passed to the brest() as
 the second parameter.
@@ -219,7 +218,7 @@ the second parameter.
 
 ```
 
-###<a name="ch2.5"></a>2.5 Enable/disable conditions
+### <a name="ch2.5"></a>2.5 Enable/disable conditions
 
 Path objects can be enabled or disabled by certain settings conditions.
 
@@ -291,9 +290,9 @@ Nested settings are described same as in previous options. I.e.
 ```
 
 
-##<a name="ch3"></a>3 Serving requests
+## <a name="ch3"></a>3 Serving requests
 
-###<a name="ch3.1"></a>3.1 Supported methods
+### <a name="ch3.1"></a>3.1 Supported methods
 
 The following methods are being supported by Brest:
 
@@ -316,7 +315,7 @@ Request parameters can be passed both as a part of the path and the query string
 Here `:floorId` and `:roomId` are path parameters and they would be accessible in `req.params` object as `req.params.floorId`
 and `req.params.roomId` respectively.
 
-####<a name="ch3.2.2"></a>3.2.2 Filtering
+#### <a name="ch3.2.2"></a>3.2.2 Filtering
 Query strings are supposed to be described in *filters* property:
 
 ```
@@ -334,7 +333,7 @@ Query strings are supposed to be described in *filters* property:
 
 Filter values are stored in req.filters property as key:value.
 
-####<a name="ch3.2.3"></a>3.2.3 Complex filter descriptions
+#### <a name="ch3.2.3"></a>3.2.3 Complex filter descriptions
 These properties description are used by documentation creation scripts to create detailed description of the resource. You can also use
 user data replacement:
 
@@ -370,7 +369,7 @@ If user in not authenticated or req.user doesn't contain `['id']` property, `403
 By default 'me' and 'mine' are replaced with current user id. It is possible to add more replacements by 'replaceMe'
 setting. (e.g. `settings.replaceMe = ['own', 'private']`).
 
-####<a name="ch3.2.4"></a>3.2.4 Filter transformations
+#### <a name="ch3.2.4"></a>3.2.4 Filter transformations
 
 It is possible to automatically transform filter values. The following transformations can be used:
 
@@ -417,7 +416,7 @@ const endpoint =
 //...
 ```
 
-####<a name="ch3.2.5"></a>3.2.5 Filter aliases
+#### <a name="ch3.2.5"></a>3.2.5 Filter aliases
 
 Some of the Brest plugins may automatically bind filters to the requests in one way or another.
 If you want to redefine the name of such filter, but you don't have an access to the responsible plugin or
@@ -500,7 +499,7 @@ const resource =
 ```
 
 
-###<a name="ch3.4"></a>3.4 Logging requests
+### <a name="ch3.4"></a>3.4 Logging requests
 
 Brest uses [mogran](https://github.com/expressjs/morgan) library to log requests. Starting from v0.1.10 it is
 possible to adjust logging as follows:
@@ -511,7 +510,7 @@ possible to adjust logging as follows:
 - morgan instance: use pre-initialized morgan instance.
 - object: {\<%format%>: {\<%settings%>}}. Load **morgan(\<%format%>, \<%settings%>)**
 
-##<a name="ch4"></a>4 Events
+## <a name="ch4"></a>4 Events
 
 Brest instance, once setup emits various events, that can be used to further extend it's functionality.
 
@@ -575,11 +574,11 @@ the number of concurrent requests and can be used to estimate current load.
 
 - **error**: Something wrong has happened. Event listener receives error object as a parameter.
 
-##<a name="ch5"></a>5 Extensions
+## <a name="ch5"></a>5 Extensions
 
-###<a name="ch5.1"></a>5.1 Current
+### <a name="ch5.1"></a>5.1 Current
 
-####Authentication
+#### Authentication
 
 [Passport](https://github.com/MaximTovstashev/brest-passport) Authenticating user with PassportJS
 
@@ -613,7 +612,7 @@ $ npm install
 $ npm test
 ```
 
-##<a name="changes"></a>Changes
+## <a name="changes"></a>Changes
 
 #### 0.4.0 ["Chapaev"](https://en.wikipedia.org/wiki/Vasily_Chapayev)
 - Method class is now called Endpoint in order to prevent confusion with HTTP methods
