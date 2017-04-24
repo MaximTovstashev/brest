@@ -625,6 +625,9 @@ $ npm test
 - Fixed issue with apiPath setting not working correctly
 - Fixed issue with bindPath not calling callback in case of success binding
 
+#### 0.3.3
+- Fixed bug with bindPath not calling callback in certain cases
+
 #### 0.3.2
 
 - Fixed bug with favicon description
