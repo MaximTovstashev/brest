@@ -4,38 +4,33 @@
 
 Brest is a (relatively) simple REST API library over [express.js](http://expressjs.com/). 
 
-##Table of contents
-<style>
-	ul.toc, ul.toc ul {
-		list-style-type: none; 
-		font-size: 14pt
-	}
-</style>
-<ul class="toc">
+## Table of contents
+
+<ul>
 	<li><a href='#migration'>Migration</a></li>
-	<li><a href='#how-do-i-use'>Guide</a></li>
-	<li><ul>
+	<li><a href='#how-do-i-use'>Guide</a>
+	<ul>
 			<li><a href="#ch1">1. Install from package manager</a></li>
-			<li><a href="#ch2">2. Setup</a></li>
-			<li><ul>
+			<li><a href="#ch2">2. Setup</a>
+			<ul>
 				<li><a href="#ch2.1">2.1 Application file</a></li>
 				<li><a href="#ch2.2">2.2 Brest working directories</a></li>
-				<li><a href="#ch2.3">2.3 Registering paths</a></li>
-				<li><ul>
+				<li><a href="#ch2.3">2.3 Registering paths</a>
+				<ul>
 					<li><a href="#ch2.3.1">2.3.1 Possible response options</a></li>
 					<li><a href="#ch2.3.2">2.3.2 Using handlers with Promises</a></li>
 				</ul></li>
 				<li><a href="#ch2.4">2.4 Settings</a></li>
-				<li><a href="#ch2.5">2.5 Enable/disable conditions</a></li>
-				<li><ul>
+				<li><a href="#ch2.5">2.5 Enable/disable conditions</a>
+				<ul>
 					<li><a href="#ch2.5.1">2.5.1 Conditions setup</a></li>
 				</ul></li>
 			</ul></li>
-			<li><a href="#ch3">3 Serving requests</a></li>
-			<li><ul>
+			<li><a href="#ch3">3 Serving requests</a>
+			<ul>
 				<li><a href="#ch3.1">3.1 Supported methods</a></li>
-				<li><a href="#ch3.2">3.2 Request URL parameters</a></li>
-				<li><ul>
+				<li><a href="#ch3.2">3.2 Request URL parameters</a>
+				<ul>
 					<li><a href="#ch3.2.1">3.2.1 Basic handling</a></li>
 					<li><a href="#ch3.2.2">3.2.2 Filtering</a></li>
 					<li><a href="#ch3.2.3">3.2.3 Complex filter descriptions</a></li>
@@ -46,8 +41,8 @@ Brest is a (relatively) simple REST API library over [express.js](http://express
 				<li><a href="#ch3.4">3.4 Logging requests</a></li>							
 			</ul></li>
 			<li><a href="#ch4">4 Events</a></li>
-			<li><a href="#ch5">5 Extensions</a></li>
-			<li><ul>
+			<li><a href="#ch5">5 Extensions</a>
+			<ul>
 				<li><a href="#ch5.1">5.1 Current</a></li>
 				<li><a href="#ch5.2">5.2 Obsolete</a></li>
 			</ul></li>
@@ -57,7 +52,7 @@ Brest is a (relatively) simple REST API library over [express.js](http://express
 	<li><a href='#license'>License</a></li>	
 </ul>
 
-##<a name="migration"></a>Migration
+## <a name="migration"></a>Migration
 
 Brest v.0.4 is going to be the last minor version before 1.0 release. The aim of 0.4.x branch is to prepare for the 
 v1.0 release: with bugs fixed, proper tests and documentation covering all aspects of using Brest in production environment.
@@ -65,7 +60,7 @@ v1.0 release: with bugs fixed, proper tests and documentation covering all aspec
 The backwards compatibility will remain through all 0.4.x releases. The oblosete features will work, but with warnings.
  Any feature that causes "deprecated" warnin will be dropped in Brest 1.0
 
-##<a name="how-do-i-use"></a>Guide
+## <a name="how-do-i-use"></a>Guide
 
 ###<a name="ch1"></a>1. Install from package manager
 
