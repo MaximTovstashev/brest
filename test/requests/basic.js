@@ -19,6 +19,32 @@ it('Should return JSON data on GET request', (done) => {
     .catch(done);
 });
 
+it('Should consider number to be a valid JSON', (done) => {
+    request
+    .get('/number')
+    .then((res) => {
+      //noinspection BadExpressionStatementJS
+        expect(res).to.be.OK;
+        expect(res.body).to.be.eql(42);
+        expect(res).to.have.status(200);
+        done();
+    })
+    .catch(done);
+});
+
+it('Should consider number to be a valid JSON', (done) => {
+    request
+    .get('/string')
+    .then((res) => {
+      //noinspection BadExpressionStatementJS
+        expect(res).to.be.OK;
+        expect(res.body).to.be.eql('The answer is 42');
+        expect(res).to.have.status(200);
+        done();
+    })
+    .catch(done);
+});
+
 it('Should process request params correctly', (done) => {
     request
     .get('/42/with/strawberry')

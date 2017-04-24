@@ -614,6 +614,9 @@ $ npm test
 
 ## <a name="changes"></a>Changes
 
+#### 0.4.1
+- Fixed pure number and string responses being treated incorrectly
+
 #### 0.4.0 ["Chapaev"](https://en.wikipedia.org/wiki/Vasily_Chapayev)
 - Method class is now called Endpoint in order to prevent confusion with HTTP methods
 - [Intel](https://github.com/seanmonstar/intel) module is now responsible for logging
