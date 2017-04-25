@@ -614,6 +614,9 @@ $ npm test
 
 ## <a name="changes"></a>Changes
 
+#### 0.4.2
+- Event emission for initializing API with settings is now adjustable
+
 #### 0.4.1
 - Fixed pure number and string responses being treated incorrectly
 
