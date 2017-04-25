@@ -67,7 +67,8 @@ In project route
 
     $ npm install brest --save
 
-You don't have to install `express.js` separately. It is included into `Brest` dependencies.
+You don't have to install `express.js` separately. It is included into `Brest` dependencies. However, you might want to
+initialize `express.js` outside of `Brest` on some occasions.
 
 ### <a name="ch2"></a>2 Setup
 #### <a name="ch2.1"></a>2.1 Application file
@@ -75,9 +76,20 @@ You don't have to install `express.js` separately. It is included into `Brest` d
 In your application file:
 
 ```javascript
-    // Require brest library
-    const Brest = require('brest');
-    const brest = new Brest(require('%path_to_settings%'));
+	// Require brest library
+	const Brest = require('brest');
+	const brest = new Brest(require('%path_to_settings%'));
+```
+
+If you want to use pre-initialized `express.js` and `app()`, you provide them as additional parameters to Brest:
+
+```javascript
+	// Require brest library
+	const Brest = require('brest');
+	const express = require('express');
+	
+	const app = express();
+	const brest = new Brest(require('%path_to_settings%'), express, app);
 ```
 
 #### <a name="ch2.2"></a>2.2 Brest working directories
@@ -613,6 +625,9 @@ $ npm test
 ```
 
 ## <a name="changes"></a>Changes
+
+#### 0.4.3
+- Brest can accept express/app instances initialized outside. 
 
 #### 0.4.2
 - Event emission for initializing API with settings is now adjustable
