@@ -3,6 +3,7 @@
 
 Brest is a (relatively) simple REST API library over [express.js](http://expressjs.com/). 
 
+[![npm version](https://badge.fury.io/js/brest.svg)](https://badge.fury.io/js/brest)
 ![CircleCI](https://circleci.com/gh/MaximTovstashev/brest.svg?style=shield&circle-token=8960d8372f5c35839baa462ce43b08b803eaea4b)
 ![Deps](https://david-dm.org/MaximTovstashev/brest/repo.svg)
 
