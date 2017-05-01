@@ -217,6 +217,10 @@ the second parameter.
     const settings = {
         application: "%app_name%",      // Application name
         environment: "dev",             // Environmen type
+        apiPath: './api',				// Path to resource folder
+        basePath: '%base_app_path%',	// Override default require.main.filename base path. Might be
+        								// usable with something like github.electron
+        								
         version: 1,                     // API default version
         server: {
             port: 8080                  // Listed on port
@@ -629,6 +633,10 @@ $ npm test
 ```
 
 ## <a name="changes"></a>Changes
+
+#### 0.4.4
+- Base directory can be overridden via settings
+- Fixed bug with attempt to detach options from null Promise.resolve
 
 #### 0.4.3
 - Brest can accept express/app instances initialized outside. 
