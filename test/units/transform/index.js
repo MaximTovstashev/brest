@@ -9,3 +9,4 @@ describe('Transform: ToInteger', () => require('./to_integer'));
 describe('Transform: ToNumber', () => require('./to_number'));
 describe('Transform: ToLowerCase', () => require('./to_lower_case'));
 describe('Transform: ToUpperCase', () => require('./to_upper_case'));
+describe('Transform: FromJSON', () => require('./from_json'));

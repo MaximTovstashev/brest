@@ -26,6 +26,40 @@ module.exports = {
             handler(req, callback) {
                 callback(null, {filters: req.filters});
             }
+        },
+        {
+            method: 'GET',
+            uri: 'json',
+            filters: {
+                query: {fromJSON: true}
+            },
+            description: 'Check basic filters functionality',
+            handler(req, callback) {
+                callback(null, {filters: req.filters});
+            }
+        },
+        {
+            method: 'GET',
+            uri: 'detach/correct',
+            filters: {
+                standalone: {detach: true},
+                rename: {detach: 'rabbits'}
+            },
+            description: 'Check filters detach',
+            handler(req, callback) {
+                callback(null, {filters: req.filters, standalone: req.standalone, rename: req.rename, rabbits: req.rabbits});
+            }
+        },
+        {
+            method: 'GET',
+            uri: 'detach/incorrect',
+            filters: {
+                crashme: {detach: 'filters'}
+            },
+            description: 'Check incorrect detach error',
+            handler(req, callback) {
+                callback(null, {filters: req.filters});
+            }
         }
     ]
 };

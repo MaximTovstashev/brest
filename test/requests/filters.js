@@ -29,3 +29,55 @@ it('Should apply limiting transformations', (done) => {
     })
     .catch(done);
 });
+
+it('Should apply fromJSON correctly for the valid JSON', (done) => {
+    request
+    .get('/json?query={"arr":["bar","baz"],"num":42,"float":3.14,"bool":true}')
+    .then((res) => {
+      //noinspection BadExpressionStatementJS
+        expect(res).to.be.OK;
+        expect(res.body).to.be.eql({filters: {query: {arr: ['bar', 'baz'], num: 42, float: 3.14, bool: true}}});
+        expect(res).to.have.status(200);
+        done();
+    })
+    .catch(done);
+});
+
+it('Should return code 422 for incorrect fromJSON application', (done) => {
+    request
+    .get('/json?query={"arr":["bar","baz",num":42{{,"float":3.14,"bool":true}')
+      .end((err, res) => {
+        //noinspection BadExpressionStatementJS
+          expect(res).to.be.OK;
+        //noinspection BadExpressionStatementJS
+          expect(res.body).to.be.eql({error: 'Unexpected token m in JSON at position 22'});
+          expect(res).to.have.status(422);
+          done();
+      });
+});
+
+it('Should detach filters correctly', (done) => {
+    request
+    .get('/detach/correct?standalone=beer&rename=chaser')
+    .then((res) => {
+      //noinspection BadExpressionStatementJS
+        expect(res).to.be.OK;
+        expect(res.body).to.be.eql({filters: {}, standalone: 'beer', rabbits: 'chaser'});
+        expect(res).to.have.status(200);
+        done();
+    })
+    .catch(done);
+});
+
+it('Should return code 422 for incorrect fromJSON application', (done) => {
+    request
+    .get('/detach/incorrect?crashme=beer')
+    .end((err, res) => {
+      //noinspection BadExpressionStatementJS
+        expect(res).to.be.OK;
+      //noinspection BadExpressionStatementJS
+        expect(res.body).to.be.eql({error: 'Can\'t detach filter "crashme" to "filters": field already exists'});
+        expect(res).to.have.status(500);
+        done();
+    });
+});

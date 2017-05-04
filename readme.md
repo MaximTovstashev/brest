@@ -228,7 +228,7 @@ the second parameter.
         static: {
             public: "public"            // Public folder path
         },
-        api_url: {
+        apiUrl: {
           	prefix: 'api/',				// Prepend url with leading string.
           	unversioned: true			// Don't include API version into the URL (default false)
         },
@@ -395,6 +395,7 @@ It is possible to automatically transform filter values. The following transform
 
 - *toArray*: transform comma-separated string into array. If provided with string value, it will be used as custom separator. 
 This transformation is made **before** any other. Unless stated otherwise, transformation filters will be applied to each array element separately.
+- *fromJSON*: accept valid JSON string and parse it into object. `HTTP 422` will be returned in case of invalid JSON
 - *toLowerCase*: transform filter value to lower case
 - *toUpperCase*: transform filter value to upper case
 - *toInteger*: transform filter value to integer
@@ -403,6 +404,10 @@ This transformation is made **before** any other. Unless stated otherwise, trans
 - *min*, *max*: limit numeric filter value. Consider using transformation to number with this parameters.
 - *clamp*: takes array of [min, max], ensures value stays between these numbers. Pre-cast to number is recommended as well. 
 - *transform*: provide custom transformation synchronous function
+- *detach*: remove filter from req.filters into separate Request object property. If `detach === true`, the parameter name
+is the same as filter name. E.g. in case of `filters: {foo: {detach: true}}` with `?foo=bar` request you will receive
+ `req.foo === bar`. If `detach === 'some_string'`, the filter will be detached into `req['some_string']`. Attempt to detach
+ into existing Request object property, like `req.query` would result in `HTTP 500` response.
 
 Please, note, that transform filters are always applied before value limit filters and custom transform is applied the last.
 
@@ -633,6 +638,13 @@ $ npm test
 ```
 
 ## <a name="changes"></a>Changes
+
+#### 0.4.5
+- Exceptions in filter transformations are now handled correctly
+- Added "fromJSON" filter transformation
+- Removed "Transform.isBoolean()" method as misleading
+- apiUrl setting now has uniform capitalization (snake_case is still valid)
+- Filters now can be detached into separate req[%field_name%] fields
 
 #### 0.4.4
 - Base directory can be overridden via settings
