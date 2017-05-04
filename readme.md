@@ -60,7 +60,7 @@ Brest v.0.4 is going to be the last minor version before 1.0 release. The aim of
 v1.0 release: with bugs fixed, proper tests and documentation covering all aspects of using Brest in production environment.
  
 The backwards compatibility will remain through all 0.4.x releases. The oblosete features will work, but with warnings.
- Any feature that causes "deprecated" warnin will be dropped in Brest 1.0
+ Any feature that causes "deprecated" warning will be dropped in Brest 1.0
 
 ## <a name="how-do-i-use"></a>Guide
 
