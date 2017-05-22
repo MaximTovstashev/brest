@@ -21,6 +21,7 @@ Brest is a (relatively) simple REST API library over [express.js](http://express
 				<ul>
 					<li><a href="#ch2.3.1">2.3.1 Possible response options</a></li>
 					<li><a href="#ch2.3.2">2.3.2 Using handlers with Promises</a></li>
+					<li><a href="#ch2.3.3">2.3.3 Asyncronous Resource initialization</a></li>
 				</ul></li>
 				<li><a href="#ch2.4">2.4 Settings</a></li>
 				<li><a href="#ch2.5">2.5 Enable/disable conditions</a>
