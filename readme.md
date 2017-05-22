@@ -118,22 +118,36 @@ You can limit to **`GET`** and **`POST`** or to any other set of HTTP verbs of y
 - `[Host]`. It is your server host. Like `example.com` or `127.0.0.1:8080`
 - `<Prefix>`. Arbitrary string to precede the rest of your URI. It is empty by default an can be assigned through `api_url.prefix` setting
 - `<Version>`. API version. By default it is `/v1/`. It is set through `version` field in `Resource` file description and can be switched off via `api_url.unversioned` setting.
-- `[Resource]`. The resource your API exposes access to. Like `user` or `package`. For the `Resource` part of the URI the `Resource` file name is used.
+- `[Resource]`. The resource your API exposes access to. Like `user` or `package`. For the `Resource` part of the URI the `Resource` file name is used. Since 0.4.6 it can be overridden via "noun" Resource description parameter.
 
 API resource are expected to export object files with the following structure:
 
 ```javascript
 module.exports = {
     version: 1,
-    description: "Resource description", //Description for the possible documentation engines
+    description: 'Resource description', //Description for the possible documentation engines    
     endpoints: [
         //List of the endpoint objects
     ]
 }
 ```
 
-Here, the version property and the filename define the beginning of the endpoints' URI. For instance, if API object from ./api/persons.js has property version: 1, the URI will start with /v1/user. After that, the resource
-objects description is used:
+Here, the version property and the filename define the beginning of the endpoints' URI. For instance, if API object from ./api/persons.js has property version: 1, the URI will start with /v1/user. 
+
+Overriding resource name: 
+
+```javascript
+module.exports = {
+    version: 1,
+    noun: 'new_name',
+    description: 'Resource description', //Description for the possible documentation engines    
+    endpoints: [
+        //List of the endpoint objects
+    ]
+}
+```
+
+After that, the resource objects description is used:
 
 Endpoint object has the following structure (properties placed alphabetically):
 
@@ -142,7 +156,7 @@ const endpoint =
 {
 	allowCORS: false, //default: false. Allow CORS for this endpoint
 
-	description: "Some description goes here", //Description for the Docker
+	description: 'Some description goes here', //Description for the Docker
 	
 	disabled: {environment: 'dev'}, //Disable condition. See 2.5 Enable/disable conditions
 	
@@ -156,7 +170,7 @@ const endpoint =
 		callback(err, result, options);
 	},
 	
-	method: "POST", //default: GET. HTTP method required.
+	method: 'POST', //default: GET. HTTP method required.
 	
 	middle: [], //Custom middleware for the endpoint
 	
@@ -206,6 +220,25 @@ Add to the response object for the handler callback
 
 Instead of using callback, you can return Promise from your handler. If you have to use options in this case, include
 them into result object with `$options` key. `$options` will be removed from resulting JSON sent to user.
+
+####<a name="ch2.3.3"></a>2.3.3 Asyncronous Resource initialization
+
+When resource file contains `async` property it is expected to be the asyncrohous function that takes callback as a single
+parameter and returns description with callback.
+
+```javascript
+	const resource_data = {
+  		endpoints: {
+  		  //...
+  		}
+	};
+
+	const resource = {
+  		async: (callback) => {
+  		  callback(null, resource_data);
+  		}
+	}
+```
 
 ### <a name="ch2.4"></a>2.4 Settings
 
@@ -637,6 +670,11 @@ $ npm test
 ```
 
 ## <a name="changes"></a>Changes
+
+#### 0.4.6
+- Resource names can be overridden with `noun` parameter
+- Resources can be loaded asyncronously
+- Fixed bug with error reporting from resource binding
 
 #### 0.4.5
 - Exceptions in filter transformations are now handled correctly
