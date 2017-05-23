@@ -672,6 +672,9 @@ $ npm test
 
 ## <a name="changes"></a>Changes
 
+#### 0.4.8
+- Added check for invalid extensions list in `Brest` constructor
+
 #### 0.4.7
 - External express() and app should now be passed within `Brest` options
 - Extensions can be passed as a second parameter, if they require pre-ready initialization
