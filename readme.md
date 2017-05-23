@@ -672,6 +672,14 @@ $ npm test
 
 ## <a name="changes"></a>Changes
 
+#### 0.4.7
+- External express() and app should now be passed within `Brest` options
+- Extensions can be passed as a second parameter, if they require pre-ready initialization
+- Bodyparser is initialized globally by default
+- Resource.endpoints and Resource.uri are now exposed as getters
+- Brest.resources is now exposed as getter
+- Async resource init now checks for empty callback result
+
 #### 0.4.6
 - Resource names can be overridden with `noun` parameter
 - Resources can be loaded asyncronously
