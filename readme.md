@@ -672,6 +672,9 @@ $ npm test
 
 ## <a name="changes"></a>Changes
 
+#### 0.4.9
+- Added "afterHandler" extension hook
+
 #### 0.4.8
 - Added check for invalid extensions list in `Brest` constructor
 
