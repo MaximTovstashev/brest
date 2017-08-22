@@ -672,6 +672,9 @@ $ npm test
 
 ## <a name="changes"></a>Changes
 
+#### 0.4.10
+- Fixed issue with returning error on empty Promise.resolve
+
 #### 0.4.9
 - Added "afterHandler" extension hook
 
