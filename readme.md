@@ -205,7 +205,7 @@ Add to the response object for the handler callback
 
 **code** {Number||String} send response with arbitrary code
 
-**headers** {Object} Set headers from {('key': 'value')} object.
+**headers** {Object} Set headers from `{('key': 'value')}` object.
 
 **cookies** {Array} Set cookies {name: "name", value: "value", options: {Object}}
 
@@ -214,6 +214,11 @@ Add to the response object for the handler callback
 **fileName** {String} Provide this file with specific name.
 
 **fileCallback** {String} Specify function to call when user has finished downloading.
+
+**autoUnlink** {Boolean} When `true` the file is automatically unlinked after user has finished downloading. Unlink is
+called prior to calling `fileCallback`, and `fileCallback` will receive unlink error if one has occured.
+
+**autoMime** {Boolean} When `true` attempts to assign `content-type` to the downloaded file automatically
 
 **redirect** {String} Redirect user to given URL
 
@@ -256,10 +261,14 @@ the second parameter.
         								
         version: 1,                     // API default version
         server: {
-            port: 8080                  // Listed on port
+            port: 8080,                  // Listed on port
+            defaultHTML: 'path/to/default/html/file'
         },
         static: {
-            public: "public"            // Public folder path
+            public: "public",            // Public folder path
+			index: "index.html",		 // Default file
+			mountPath: "static/",		 // Path prefix for the static
+			options: {}					 // See https://github.com/expressjs/serve-static options					
         },
         apiUrl: {
           	prefix: 'api/',				// Prepend url with leading string.
@@ -671,6 +680,19 @@ $ npm test
 ```
 
 ## <a name="changes"></a>Changes
+
+#### 1.0.0.aplha.2
+- Endpoint URI is more smart regarding extra slashes now
+- Added static options
+- Static path now has to be absolute (for the sake of similarity with API dir path)
+- Added `autoUnlink` option for the file download
+- Added `autoMime` option to allow automatic Mime type lookup (by extension)
+- `Content-disposition` header is sent alongside the downloading file
+- Added warning when attempting to use non-existing or unreachable static files path
+- Fixed issue with counters working incorrectly on file download and redirections
+
+#### 1.0.0.aplha.1
+- Async loading
 
 #### 0.4.10
 - Fixed issue with returning error on empty Promise.resolve
