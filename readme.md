@@ -213,7 +213,7 @@ Add to the response object for the handler callback
 
 **fileName** {String} Provide this file with specific name.
 
-**fileCallback** {String} Specify function to call when user has finished downloading.
+**fileCallback** {Function} Specify function to call when user has finished downloading.
 
 **autoUnlink** {Boolean} When `true` the file is automatically unlinked after user has finished downloading. Unlink is
 called prior to calling `fileCallback`, and `fileCallback` will receive unlink error if one has occured.
