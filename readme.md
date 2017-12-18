@@ -254,12 +254,22 @@ the second parameter.
 ```javascript
     const settings = {
         application: "%app_name%",      // Application name
-        environment: "dev",             // Environmen type
+        
         apiPath: './api',				// Path to resource folder
+        
+		apiUrl: {
+			prefix: 'api/',				// Prepend url with leading string.
+			unversioned: true			// Don't include API version into the URL (default false)
+		},
+		
         basePath: '%base_app_path%',	// Override default require.main.filename base path. Might be
         								// usable with something like github.electron
         								
-        version: 1,                     // API default version
+		cors: {},						//cors settings
+										//see https://github.com/expressjs/cors#configuration-options        								
+        								
+        environment: "dev",             // Environmen type        								
+
         server: {
             port: 8080,                  // Listed on port
             defaultHTML: 'path/to/default/html/file'
@@ -269,11 +279,12 @@ the second parameter.
 			index: "index.html",		 // Default file
 			mountPath: "static/",		 // Path prefix for the static
 			options: {}					 // See https://github.com/expressjs/serve-static options					
-        },
-        apiUrl: {
-          	prefix: 'api/',				// Prepend url with leading string.
-          	unversioned: true			// Don't include API version into the URL (default false)
-        },
+        },        
+        
+		version: 1,                     // API default version
+        
+        
+        //Startup hooks
         before_static_init: (express, app) => {}, //Function to be called before static route is setup
         after_static_init: (express, app) => {}   //Function to be called after static route is setup
     }
