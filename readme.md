@@ -157,7 +157,7 @@ const endpoint =
 {
 	allowCORS: false, //default: false. Allow CORS for this endpoint
 
-	description: 'Some description goes here', //Description for the Docker
+	description: 'Some description goes here', //Description for the documentation engines
 	
 	disabled: {environment: 'dev'}, //Disable condition. See 2.5 Enable/disable conditions
 	
@@ -253,40 +253,40 @@ the second parameter.
 
 ```javascript
     const settings = {
-        application: "%app_name%",      // Application name
+		application: "%app_name%",      // Application name
         
-        apiPath: './api',				// Path to resource folder
+		apiPath: './api',				// Path or paths to resource folder ['./api', './additionalApi']
         
 		apiUrl: {
 			prefix: 'api/',				// Prepend url with leading string.
 			unversioned: true			// Don't include API version into the URL (default false)
 		},
 		
-        basePath: '%base_app_path%',	// Override default require.main.filename base path. Might be
+		basePath: '%base_app_path%',	// Override default require.main.filename base path. Might be
         								// usable with something like github.electron
         								
 		cors: {},						//cors settings
 										//see https://github.com/expressjs/cors#configuration-options        								
         								
-        environment: "dev",             // Environmen type        								
+		environment: "dev",             // Environmen type        								
 
-        server: {
-            port: 8080,                  // Listed on port
-            defaultHTML: 'path/to/default/html/file'
-        },
-        static: {
-            public: "public",            // Public folder path
+		server: {
+			port: 8080,                  // Listed on port
+			defaultHTML: 'path/to/default/html/file'
+		},
+		static: {
+			public: "public",            // Public folder path
 			index: "index.html",		 // Default file
 			mountPath: "static/",		 // Path prefix for the static
 			options: {}					 // See https://github.com/expressjs/serve-static options					
-        },        
+		},        
         
 		version: 1,                     // API default version
         
         
-        //Startup hooks
-        before_static_init: (express, app) => {}, //Function to be called before static route is setup
-        after_static_init: (express, app) => {}   //Function to be called after static route is setup
+		//Startup hooks
+		before_static_init: (express, app) => {}, //Function to be called before static route is setup
+		after_static_init: (express, app) => {}   //Function to be called after static route is setup
     }
 
 ```
@@ -677,7 +677,7 @@ express-limiter library
 
 - [Docker](https://github.com/MaximTovstashev/brest-docker) Extension automatically builds documentation for the Brest API function.
 This extension is currently not supported (and has nothing to do with Docker container management)
-- [MariaDB](https://github.com/MaximTovstashev/brest-maria) MariaDB (abandoned, use MySQL instead!)
+- [MariaDB](https://github.com/MaximTovstashev/brest-maria) MariaDB (abandoned, see MySQL instead!)
 
 ##<a name="tests"></a>Tests
 
@@ -690,7 +690,18 @@ $ npm test
 
 ## <a name="changes"></a>Changes
 
-#### 1.0.0.aplha.2
+#### 1.0.0.alpha.5
+- brest.initialized() returns a Promise which is being resolved on 'ready' event
+- Fixed issue with incorrect url joining on Windows
+
+#### 1.0.0.alpha.4
+- Minor cleanup
+
+#### 1.0.0.alpha.3
+- Fixed default settings retrieval
+- CORS settings can be provided as a parameter to allowCORS endpoint option
+
+#### 1.0.0.alpha.2
 - Endpoint URI is more smart regarding extra slashes now
 - Added static options
 - Static path now has to be absolute (for the sake of similarity with API dir path)
@@ -700,7 +711,7 @@ $ npm test
 - Added warning when attempting to use non-existing or unreachable static files path
 - Fixed issue with counters working incorrectly on file download and redirections
 
-#### 1.0.0.aplha.1
+#### 1.0.0.alpha.1
 - Async loading
 
 #### 0.4.10
