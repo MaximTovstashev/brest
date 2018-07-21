@@ -188,6 +188,8 @@ const endpoint =
 	
 	screen: {noAuth: ['some_field']}, //Remove fields from response. Currently for noAuth only
 	
+	skipApiPathScan: false, //If true, Brest will not attempt to scan api directory.
+	
 	stub: false, //default: false. If true, resource returns "Not implemented yet" message.
 
 	upload: {}, //Multer settings object (see 3.3 for details)
@@ -689,6 +691,11 @@ $ npm test
 ```
 
 ## <a name="changes"></a>Changes
+
+#### 1.0.0.alpha.6
+- brest.initialized() now works correctly if 'ready' event has fired before the function was called
+- bindFile now optionally accepts an array of filenames
+- bind now optionally accepts an array of descriptions
 
 #### 1.0.0.alpha.5
 - brest.initialized() returns a Promise which is being resolved on 'ready' event
