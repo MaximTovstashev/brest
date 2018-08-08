@@ -224,12 +224,12 @@ called prior to calling `fileCallback`, and `fileCallback` will receive unlink e
 
 **redirect** {String} Redirect user to given URL
 
-####<a name="ch2.3.2"></a>2.3.2 Using handlers with Promises
+#### <a name="ch2.3.2"></a>2.3.2 Using handlers with Promises
 
 Instead of using callback, you can return Promise from your handler. If you have to use options in this case, include
 them into result object with `$options` key. `$options` will be removed from resulting JSON sent to user.
 
-####<a name="ch2.3.3"></a>2.3.3 Asyncronous Resource initialization
+#### <a name="ch2.3.3"></a>2.3.3 Asyncronous Resource initialization
 
 When resource file contains `async` property it is expected to be the asyncrohous function that takes callback as a single
 parameter and returns description with callback.
@@ -306,7 +306,7 @@ Path objects can be enabled or disabled by certain settings conditions.
 First enabled conditions are checked, and then disabled conditions are checked. Which means, if settings meet both
 conditions, the path will be disabled disregarding 'enabled' condition.
 
-####<a name="ch2.5.1"></a>2.5.1 Conditions setup
+#### <a name="ch2.5.1"></a>2.5.1 Conditions setup
 
 The following formats are possible (appliable for "disabled" as well):
 
@@ -378,8 +378,8 @@ GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH, TRACE
 If the request is send to existing URI with undefined method (say, you have **`GET`**`/v1/kittens` and **`POST`**`/v1/kittens`, but
 you try to **`DELETE`**`/v1/kittens`) Brest will respond with `405` error code and response header will contain `Allow: GET, POST`.
 
-###<a name="ch3.2"></a>3.2 Request URL parameters
-####<a name="ch3.2.1"></a>3.2.1 Basic handling
+### <a name="ch3.2"></a>3.2 Request URL parameters
+#### <a name="ch3.2.1"></a>3.2.1 Basic handling
 Request parameters can be passed both as a part of the path and the query string. Path parameters are described in
 "uri" property of resource description object:
 
@@ -675,13 +675,13 @@ the number of concurrent requests and can be used to estimate current load.
 express-limiter library
 
 
-###<a name="ch5.2"></a>5.2 Obsolete
+### <a name="ch5.2"></a>5.2 Obsolete
 
 - [Docker](https://github.com/MaximTovstashev/brest-docker) Extension automatically builds documentation for the Brest API function.
 This extension is currently not supported (and has nothing to do with Docker container management)
 - [MariaDB](https://github.com/MaximTovstashev/brest-maria) MariaDB (abandoned, see MySQL instead!)
 
-##<a name="tests"></a>Tests
+## <a name="tests"></a>Tests
 
 
 To run the test suite, first install the dependencies, then run npm test:
@@ -1015,7 +1015,7 @@ Fixed issue with URL parameters passed to method with no described filters.
 
 First working version.
 
-##<a name="license"></a>MIT License
+## <a name="license"></a>MIT License
 
 Copyright © 2013 Maxim Tovstashev <max.kitsch@gmail.com>
 
